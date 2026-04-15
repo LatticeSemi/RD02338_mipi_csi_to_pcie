@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<RadiantModule architecture="jd5d00" date="2026 03 05 19:51:40" device="LFCPNX-100" device_int="jd5d80" display_module="PLL" display_vendor="latticesemi.com" family="LFCPNX" gen_platform="Propel" gen_platform_version="2025.2.0.2512111315" generator="ipgen" library="module" module="pll" name="sys_clk_pll" operation="Commercial" package="LFG672" package_int="LFG672" partnumber="LFCPNX-100-9LFG672C" source_format="Verilog" speed="9_High-Performance_1.0V" speed_int="12" vendor="latticesemi.com" version="1.9.1">
+ <Package>
+  <File modified="2026 03 05 19:51:40" name="rtl/sys_clk_pll_bb.v" type="black_box_verilog"/>
+  <File modified="2026 03 05 19:51:40" name="sys_clk_pll.cfg" type="cfg"/>
+  <File modified="2026 03 05 19:51:40" name="misc/sys_clk_pll_tmpl.v" type="template_verilog"/>
+  <File modified="2026 03 05 19:51:40" name="misc/sys_clk_pll_tmpl.vhd" type="template_vhdl"/>
+  <File modified="2026 03 05 19:51:40" name="rtl/sys_clk_pll.v" type="top_level_verilog"/>
+  <File modified="2026 03 05 19:51:40" name="constraints/sys_clk_pll.ldc" type="timing_constraints"/>
+  <File modified="2026 03 05 19:51:40" name="testbench/dut_params.v" type="dependency_file"/>
+  <File modified="2026 03 05 19:51:40" name="testbench/dut_inst.v" type="dependency_file"/>
+  <File modified="2026 03 05 19:51:40" name="component.xml" type="IP-XACT_component"/>
+  <File modified="2026 03 05 19:51:40" name="design.xml" type="IP-XACT_design"/>
+  <File modified="2024 04 16 13:53:01" name="testbench/tb_top.v" type="testbench_verilog"/>
+ </Package>
+</RadiantModule>

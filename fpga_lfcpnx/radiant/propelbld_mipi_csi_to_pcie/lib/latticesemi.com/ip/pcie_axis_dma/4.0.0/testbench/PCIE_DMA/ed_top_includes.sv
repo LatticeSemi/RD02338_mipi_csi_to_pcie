@@ -1,0 +1,6 @@
+`include "LMMI_app.v"
+`include "debounce.v"
+`include "dma_flopq.sv"
+`include "dma_local_mem.sv"
+`include "pll_250.sv"
+`include "axist_generator.sv"

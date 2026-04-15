@@ -1,0 +1,190 @@
+#-- CLOCKS
+#   Clocks defined in this sample PDC are for evaluation purposes and only serves as a 
+#   guidance. All clocks should be defined in the top-level PDC.
+#--
+
+# Current target is set to 150MHz. Update as deemed necessary.
+
+
+# Update target frequency to pass timing
+
+
+if {$IP_INST_FAMILY == "LAV-AT" || $IP_INST_FAMILY == "LN2-CT"} {
+	if {$IP_INST_speed == "3"} {
+		set RX_CLOCK_FREQ "190"
+		set TX_CLOCK_FREQ "200"
+		set AXI_CLOCK_FREQ "200"
+	} else {
+		set RX_CLOCK_FREQ "170"
+		set TX_CLOCK_FREQ "200"
+		set AXI_CLOCK_FREQ "200"
+	}
+} else {
+	if {$IP_INST_speed == "9_High-Performance_1.0V"} {
+		if {$IP_INST_BITS_PER_PIXEL == 6 && $IP_INST_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "170"
+			set TX_CLOCK_FREQ "150"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 6 && $IP_INST_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "150"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 6 && $IP_INST_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "110"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 8 && $IP_INST_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "150"
+			set TX_CLOCK_FREQ "140"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 8 && $IP_INST_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "140"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 8 && $IP_INST_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "140"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 10 && $IP_INST_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "150"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 10 && $IP_INST_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "150"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 10 && $IP_INST_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "170"
+			set TX_CLOCK_FREQ "145"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 12 && $IP_INST_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "150"
+			set TX_CLOCK_FREQ "150"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 12 && $IP_INST_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "150"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 12 && $IP_INST_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "140"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 16 && $IP_INST_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "140"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 16 && $IP_INST_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "170"
+			set TX_CLOCK_FREQ "140"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 16 && $IP_INST_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "170"
+			set TX_CLOCK_FREQ "150"
+			set AXI_CLOCK_FREQ "200"
+		}
+	} else {
+		if {$IP_INST_BITS_PER_PIXEL == 6 && $IP_INST_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "130"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 6 && $IP_INST_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "125"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 6 && $IP_INST_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "140"
+			set TX_CLOCK_FREQ "110"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 8 && $IP_INST_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "130"
+			set TX_CLOCK_FREQ "110"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 8 && $IP_INST_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "120"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 8 && $IP_INST_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "125"
+			set TX_CLOCK_FREQ "110"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 10 && $IP_INST_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "120"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 10 && $IP_INST_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "140"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 10 && $IP_INST_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "120"
+			set TX_CLOCK_FREQ "115"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 12 && $IP_INST_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "120"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 12 && $IP_INST_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "130"
+			set TX_CLOCK_FREQ "110"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 12 && $IP_INST_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "120"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 16 && $IP_INST_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "120"
+			set TX_CLOCK_FREQ "115"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 16 && $IP_INST_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "135"
+			set TX_CLOCK_FREQ "110"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$IP_INST_BITS_PER_PIXEL == 16 && $IP_INST_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "135"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		}
+	}
+}
+
+
+set RX_CLOCK_PERIOD [expr {double(round(1000000/$RX_CLOCK_FREQ))/1000}]
+set TX_CLOCK_PERIOD [expr {double(round(1000000/$TX_CLOCK_FREQ))/1000}]
+set AXI_CLOCK_PERIOD [expr {double(round(1000000/$AXI_CLOCK_FREQ))/1000}]
+
+create_clock -name {awb_top_inst/axis_rx_clk_i} -period $RX_CLOCK_PERIOD [get_ports axis_rx_clk_i]
+create_clock -name {awb_top_inst/axis_tx_clk_i} -period $TX_CLOCK_PERIOD [get_ports axis_tx_clk_i]
+create_clock -name {axi_lite_clk_i} -period $AXI_CLOCK_PERIOD [get_ports axi_lite_clk_i]
+
+set_clock_groups -group [get_clocks axi_lite_clk_i] -group [get_clocks awb_top_inst/axis_rx_clk_i] -group [get_clocks awb_top_inst/axis_tx_clk_i] -asynchronous
+
+
+#create_clock -name {axi_lite_clk_i} -period 10 [get_ports axi_lite_clk_i]
+#create_clock -name {awb_top_inst/axis_rx_clk_i} -period 5 [get_ports axis_rx_clk_i]
+#create_clock -name {awb_top_inst/axis_tx_clk_i} -period 5 [get_ports axis_tx_clk_i]
+
+
+set_false_path -from [get_clocks awb_top_inst/axis_tx_clk_i] -to [get_clocks awb_top_inst/axis_rx_clk_i]
+set_false_path -from [get_clocks axi_lite_clk_i] -to [get_clocks awb_top_inst/axis_rx_clk_i]
+
+set_false_path -from [get_clocks awb_top_inst/axis_rx_clk_i] -to [get_clocks awb_top_inst/axis_tx_clk_i]
+
+set_false_path -from [get_clocks awb_top_inst/axis_rx_clk_i] -to [get_clocks axi_lite_clk_i]
+
+#----- VIRTUAL IOS
+#      Below ports are usually not brought as top-level ports in system-level
+#      applications and set as Virtual IOs to pass Map for evaluation purposes.
+
+
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports {ar_address_i[0]}]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports {ar_address_i[1]}]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports {ar_address_i[2]}]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports {ar_address_i[3]}]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports ar_*]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports aw_*]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports *_i]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports *_o]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports r_*]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports tx_*]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports w_*]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports rx_*]

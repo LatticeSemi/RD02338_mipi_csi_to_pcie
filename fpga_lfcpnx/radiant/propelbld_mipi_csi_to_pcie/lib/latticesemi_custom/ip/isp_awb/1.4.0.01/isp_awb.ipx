@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<RadiantModule architecture="jd5d00" date="2026 03 05 19:51:24" device="LFCPNX-100" device_int="jd5d80" display_module="Automatic White Balance" display_vendor="latticesemi_custom" family="LFCPNX" gen_platform="Propel" gen_platform_version="2025.2.0.2512111315" generator="ipgen" library="ip" module="awb" name="isp_awb" operation="Commercial" package="LFG672" package_int="LFG672" partnumber="LFCPNX-100-9LFG672C" source_format="Verilog" speed="9_High-Performance_1.0V" speed_int="12" vendor="latticesemi_custom" version="1.4.0.01">
+ <Package>
+  <File modified="2026 03 05 19:51:24" name="rtl/isp_awb_bb.v" type="black_box_verilog"/>
+  <File modified="2026 03 05 19:51:24" name="isp_awb.cfg" type="cfg"/>
+  <File modified="2026 03 05 19:51:24" name="misc/isp_awb_tmpl.v" type="template_verilog"/>
+  <File modified="2026 03 05 19:51:24" name="misc/isp_awb_tmpl.vhd" type="template_vhdl"/>
+  <File modified="2026 03 05 19:51:24" name="rtl/isp_awb.v" type="top_level_verilog"/>
+  <File modified="2026 03 05 19:51:24" name="constraints/isp_awb.ldc" type="timing_constraints"/>
+  <File modified="2026 03 05 19:51:24" name="eval/dut_params.v" type="dependency_file"/>
+  <File modified="2026 03 05 19:51:24" name="eval/dut_inst.v" type="dependency_file"/>
+  <File modified="2026 03 05 19:51:24" name="component.xml" type="IP-XACT_component"/>
+  <File modified="2026 03 05 19:51:24" name="design.xml" type="IP-XACT_design"/>
+  <File modified="2026 03 05 14:20:28" name="eval/ip_tmp_eval.pdc" type="eval"/>
+  <File modified="2026 03 05 14:20:28" name="eval/mem_list.txt" type="eval"/>
+  <File modified="2026 03 05 14:21:24" name="eval/constraint_eval.pdc" type="eval"/>
+ </Package>
+</RadiantModule>

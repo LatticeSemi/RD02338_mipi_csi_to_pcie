@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<RadiantModule architecture="jd5d00" date="2026 03 05 19:52:09" device="LFCPNX-100" device_int="jd5d80" display_module="Unified Video to PCIe Bridge" display_vendor="latticesemi_custom" family="LFCPNX" gen_platform="Propel" gen_platform_version="2025.2.0.2512111315" generator="ipgen" library="ip" module="unified_video_to_pcie_bridge" name="video_pcie_bridge" operation="Commercial" package="LFG672" package_int="LFG672" partnumber="LFCPNX-100-9LFG672C" source_format="Verilog" speed="9_High-Performance_1.0V" speed_int="12" vendor="latticesemi_custom" version="1.1.0">
+ <Package>
+  <File modified="2026 03 05 19:52:09" name="rtl/video_pcie_bridge_bb.sv" type="black_box_verilog"/>
+  <File modified="2026 03 05 19:52:09" name="video_pcie_bridge.cfg" type="cfg"/>
+  <File modified="2026 03 05 19:52:09" name="misc/video_pcie_bridge_tmpl.sv" type="template_verilog"/>
+  <File modified="2026 03 05 19:52:09" name="misc/video_pcie_bridge_tmpl.vhd" type="template_vhdl"/>
+  <File modified="2026 03 05 19:52:09" name="rtl/video_pcie_bridge.sv" type="top_level_verilog"/>
+  <File modified="2026 03 05 19:52:09" name="component.xml" type="IP-XACT_component"/>
+  <File modified="2026 03 05 19:52:09" name="design.xml" type="IP-XACT_design"/>
+ </Package>
+</RadiantModule>

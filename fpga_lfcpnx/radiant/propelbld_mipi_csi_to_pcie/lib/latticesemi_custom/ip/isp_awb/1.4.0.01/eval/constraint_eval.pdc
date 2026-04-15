@@ -1,0 +1,222 @@
+#-------------------------------------------------------------------------------
+# Generated IP Settings
+# LDC File: ./propelbld_mipi_csi_to_pcie/lib/latticesemi_custom/ip/isp_awb/1.4.0.01/constraints/isp_awb.ldc
+#-------------------------------------------------------------------------------
+set isp_awb_device "LFCPNX-100"
+set isp_awb_device_int "jd5d80"
+set isp_awb_package "LFG672"
+set isp_awb_package_int "LFG672"
+set isp_awb_speed "9_High-Performance_1.0V"
+set isp_awb_speed_int "12"
+set isp_awb_operation "Commercial"
+set isp_awb_family "LFCPNX"
+set isp_awb_architecture "jd5d00"
+set isp_awb_partnumber "LFCPNX-100-9LFG672C"
+set isp_awb_WRAPPER_INST "awb_top_inst"
+set isp_awb_IP_DIR "./propelbld_mipi_csi_to_pcie/lib/latticesemi_custom/ip/isp_awb/1.4.0.01"
+set isp_awb_FAMILY "LFCPNX"
+set isp_awb_BITS_PER_PIXEL 8
+set isp_awb_PIXELS_PER_CLK 4
+set isp_awb_CSR_ENABLE 0
+set isp_awb_TX_BUFFER_DEPTH "128"
+set isp_awb_VIDEO_TYPE "RGB"
+set isp_awb_BAYER_PATTERN "RGGB"
+set isp_awb_CONFIG_DONE 1
+set isp_awb_AXI_STREAM_DATA_WIDTH "96"
+set isp_awb_AXI_LITE_ADDR_WIDTH "2"
+set isp_awb_AXI_LITE_DATA_WIDTH 32
+set isp_awb_MEM_INIT_FILE "./propelbld_mipi_csi_to_pcie/lib/latticesemi_custom/ip/isp_awb/1.4.0.01/eval/mem_list.txt"
+
+#-------------------------------------------------------------------------------
+# Evaluation Constraints
+#-------------------------------------------------------------------------------
+#-- CLOCKS
+#   Clocks defined in this sample PDC are for evaluation purposes and only serves as a 
+#   guidance. All clocks should be defined in the top-level PDC.
+#--
+
+# Current target is set to 150MHz. Update as deemed necessary.
+
+
+# Update target frequency to pass timing
+
+
+if {$isp_awb_FAMILY == "LAV-AT" || $isp_awb_FAMILY == "LN2-CT"} {
+	if {$isp_awb_speed == "3"} {
+		set RX_CLOCK_FREQ "190"
+		set TX_CLOCK_FREQ "200"
+		set AXI_CLOCK_FREQ "200"
+	} else {
+		set RX_CLOCK_FREQ "170"
+		set TX_CLOCK_FREQ "200"
+		set AXI_CLOCK_FREQ "200"
+	}
+} else {
+	if {$isp_awb_speed == "9_High-Performance_1.0V"} {
+		if {$isp_awb_BITS_PER_PIXEL == 6 && $isp_awb_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "170"
+			set TX_CLOCK_FREQ "150"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 6 && $isp_awb_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "150"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 6 && $isp_awb_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "110"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 8 && $isp_awb_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "150"
+			set TX_CLOCK_FREQ "140"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 8 && $isp_awb_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "140"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 8 && $isp_awb_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "140"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 10 && $isp_awb_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "150"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 10 && $isp_awb_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "150"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 10 && $isp_awb_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "170"
+			set TX_CLOCK_FREQ "145"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 12 && $isp_awb_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "150"
+			set TX_CLOCK_FREQ "150"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 12 && $isp_awb_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "150"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 12 && $isp_awb_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "140"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 16 && $isp_awb_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "160"
+			set TX_CLOCK_FREQ "140"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 16 && $isp_awb_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "170"
+			set TX_CLOCK_FREQ "140"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 16 && $isp_awb_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "170"
+			set TX_CLOCK_FREQ "150"
+			set AXI_CLOCK_FREQ "200"
+		}
+	} else {
+		if {$isp_awb_BITS_PER_PIXEL == 6 && $isp_awb_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "130"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 6 && $isp_awb_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "125"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 6 && $isp_awb_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "140"
+			set TX_CLOCK_FREQ "110"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 8 && $isp_awb_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "130"
+			set TX_CLOCK_FREQ "110"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 8 && $isp_awb_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "120"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 8 && $isp_awb_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "125"
+			set TX_CLOCK_FREQ "110"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 10 && $isp_awb_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "120"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 10 && $isp_awb_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "140"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 10 && $isp_awb_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "120"
+			set TX_CLOCK_FREQ "115"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 12 && $isp_awb_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "120"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 12 && $isp_awb_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "130"
+			set TX_CLOCK_FREQ "110"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 12 && $isp_awb_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "120"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 16 && $isp_awb_PIXELS_PER_CLK == 1} {
+			set RX_CLOCK_FREQ "120"
+			set TX_CLOCK_FREQ "115"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 16 && $isp_awb_PIXELS_PER_CLK == 2} {
+			set RX_CLOCK_FREQ "135"
+			set TX_CLOCK_FREQ "110"
+			set AXI_CLOCK_FREQ "200"
+		} elseif {$isp_awb_BITS_PER_PIXEL == 16 && $isp_awb_PIXELS_PER_CLK == 4} {
+			set RX_CLOCK_FREQ "135"
+			set TX_CLOCK_FREQ "120"
+			set AXI_CLOCK_FREQ "200"
+		}
+	}
+}
+
+
+set RX_CLOCK_PERIOD [expr {double(round(1000000/$RX_CLOCK_FREQ))/1000}]
+set TX_CLOCK_PERIOD [expr {double(round(1000000/$TX_CLOCK_FREQ))/1000}]
+set AXI_CLOCK_PERIOD [expr {double(round(1000000/$AXI_CLOCK_FREQ))/1000}]
+
+create_clock -name {awb_top_inst/axis_rx_clk_i} -period $RX_CLOCK_PERIOD [get_ports axis_rx_clk_i]
+create_clock -name {awb_top_inst/axis_tx_clk_i} -period $TX_CLOCK_PERIOD [get_ports axis_tx_clk_i]
+create_clock -name {axi_lite_clk_i} -period $AXI_CLOCK_PERIOD [get_ports axi_lite_clk_i]
+
+set_clock_groups -group [get_clocks axi_lite_clk_i] -group [get_clocks awb_top_inst/axis_rx_clk_i] -group [get_clocks awb_top_inst/axis_tx_clk_i] -asynchronous
+
+
+#create_clock -name {axi_lite_clk_i} -period 10 [get_ports axi_lite_clk_i]
+#create_clock -name {awb_top_inst/axis_rx_clk_i} -period 5 [get_ports axis_rx_clk_i]
+#create_clock -name {awb_top_inst/axis_tx_clk_i} -period 5 [get_ports axis_tx_clk_i]
+
+
+set_false_path -from [get_clocks awb_top_inst/axis_tx_clk_i] -to [get_clocks awb_top_inst/axis_rx_clk_i]
+set_false_path -from [get_clocks axi_lite_clk_i] -to [get_clocks awb_top_inst/axis_rx_clk_i]
+
+set_false_path -from [get_clocks awb_top_inst/axis_rx_clk_i] -to [get_clocks awb_top_inst/axis_tx_clk_i]
+
+set_false_path -from [get_clocks awb_top_inst/axis_rx_clk_i] -to [get_clocks axi_lite_clk_i]
+
+#----- VIRTUAL IOS
+#      Below ports are usually not brought as top-level ports in system-level
+#      applications and set as Virtual IOs to pass Map for evaluation purposes.
+
+
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports {ar_address_i[0]}]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports {ar_address_i[1]}]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports {ar_address_i[2]}]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports {ar_address_i[3]}]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports ar_*]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports aw_*]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports *_i]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports *_o]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports r_*]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports tx_*]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports w_*]
+ldc_set_attribute {VIRTUAL_IO=TRUE} [get_ports rx_*]

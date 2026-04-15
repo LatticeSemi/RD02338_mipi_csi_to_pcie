@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<RadiantModule architecture="jd5d00" date="2026 03 05 19:51:50" device="LFCPNX-100" device_int="jd5d80" display_module="AXI4 to APB Bridge" display_vendor="latticesemi.com" family="LFCPNX" gen_platform="Propel" gen_platform_version="2025.2.0.2512111315" generator="ipgen" library="ip" module="axi2apb_bridge" name="axi_to_apb" operation="Commercial" package="LFG672" package_int="LFG672" partnumber="LFCPNX-100-9LFG672C" source_format="Verilog" speed="9_High-Performance_1.0V" speed_int="12" vendor="latticesemi.com" version="1.4.0">
+ <Package>
+  <File modified="2026 03 05 19:51:50" name="rtl/axi_to_apb_bb.v" type="black_box_verilog"/>
+  <File modified="2026 03 05 19:51:50" name="axi_to_apb.cfg" type="cfg"/>
+  <File modified="2026 03 05 19:51:50" name="misc/axi_to_apb_tmpl.v" type="template_verilog"/>
+  <File modified="2026 03 05 19:51:50" name="misc/axi_to_apb_tmpl.vhd" type="template_vhdl"/>
+  <File modified="2026 03 05 19:51:50" name="rtl/axi_to_apb.v" type="top_level_verilog"/>
+  <File modified="2026 03 05 19:51:50" name="component.xml" type="IP-XACT_component"/>
+  <File modified="2026 03 05 19:51:50" name="design.xml" type="IP-XACT_design"/>
+ </Package>
+</RadiantModule>

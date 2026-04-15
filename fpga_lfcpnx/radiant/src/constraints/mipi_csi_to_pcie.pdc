@@ -1,0 +1,67 @@
+# Pin Assignments
+ldc_set_location -site {R5} [get_ports rst_led]
+ldc_set_location -site {R4} [get_ports {pcie_status_led_o[0]}]
+ldc_set_location -site {R8} [get_ports {pcie_status_led_o[1]}]
+ldc_set_location -site {R9} [get_ports {pcie_status_led_o[2]}]
+ldc_set_location -site {U8} [get_ports {pcie_status_led_o[3]}]
+ldc_set_location -site {R7} [get_ports {pcie_status_led_o[4]}]
+ldc_set_location -site {AF21} [get_ports {d_p_io[0]}]
+ldc_set_location -site {AF19} [get_ports {d_p_io[1]}]
+ldc_set_location -site {AC18} [get_ports {d_p_io[2]}]
+ldc_set_location -site {W17} [get_ports {d_p_io[3]}]
+ldc_set_location -site {P24} [get_ports clk_125mhz]
+ldc_set_location -site {R26} [get_ports pcie_perst_n_i]
+ldc_set_port -iobuf {PULLMODE=NONE} [get_ports pcie_perst_n_i]
+ldc_set_location -site {N9} [get_ports rst_n]
+ldc_set_port -iobuf {IO_TYPE=LVCMOS33} [get_ports rst_n]
+ldc_set_port -iobuf {IO_TYPE=LVCMOS12H} [get_ports clk_n_io]
+ldc_set_location -site {AE13} [get_ports clk_p_io]
+ldc_set_port -iobuf {IO_TYPE=MIPI_DPHY} [get_ports clk_p_io]
+ldc_set_location -site {AF24} [get_ports cam_scl_io]
+ldc_set_port -iobuf {IO_TYPE=LVCMOS18H} [get_ports cam_scl_io]
+ldc_set_location -site {AB20} [get_ports cam_sda_io]
+ldc_set_port -iobuf {IO_TYPE=LVCMOS18H} [get_ports cam_sda_io]
+ldc_set_location -site {AF25} [get_ports cpnx_versa_pcie_sw_sel_o]
+ldc_set_port -iobuf {IO_TYPE=LVCMOS18H} [get_ports cpnx_versa_pcie_sw_sel_o]
+ldc_set_location -site {AB25} [get_ports cpnx_versa_pcie_clk_sel_o]
+ldc_set_port -iobuf {IO_TYPE=LVCMOS18H} [get_ports cpnx_versa_pcie_clk_sel_o]
+ldc_set_location -site {T6} [get_ports cpnx_versa_pcie_sw1_pd_o]
+ldc_set_location -site {T5} [get_ports cpnx_versa_pcie_sw2_pd_o]
+ldc_set_location -site {AC20} [get_ports cam_reset_n_o]
+ldc_set_port -iobuf {IO_TYPE=LVCMOS18H} [get_ports cam_reset_n_o]
+
+# Design Attributes
+ldc_set_sysconfig {MASTER_SPI_PORT=QUAD JTAG_PORT=ENABLE BACKGROUND_RECONFIG=ON CONFIG_IOSLEW=FAST CONFIGIO_VOLTAGE_BANK0=3.3 CONFIGIO_VOLTAGE_BANK1=3.3 MCCLK_FREQ=28.1}
+ldc_set_attribute {GSR_NET=TRUE} [get_nets pcie_perst_n_i_c]
+
+# Clock Constraints
+create_clock -name {clk_125mhz} -period 8 [get_ports clk_125mhz]
+create_clock -name {clk_p_io} -period 1.6667 [get_ports clk_p_io]
+
+# Timing Constraints
+set_clock_groups -group [get_clocks sys_clk_pll_inst_clkop_o_net] -group [get_clocks sys_clk_pll_inst_clkos_o_net] -group [get_clocks sys_clk_pll_inst_clkos3_o_net*] -asynchronous
+ldc_create_group -name PCIE_RX_1TO2 -bbox {11 41} [get_cells {*/lscc_pcie_x4_inst/NEW_AXI_DMA.pcie_axi_sgdma_inst/rx_tlp_router/TLP_8DW.router/DCFIFO.rx_1_to_2_inst }]
+ldc_set_location -site {R2C32D} [ldc_get_groups PCIE_RX_1TO2]
+ldc_create_group -name TX_2STG -bbox {3 30} [get_cells {*/lscc_pcie_x4_inst/NEW_AXI_DMA.pcie_axi_sgdma_inst/NO_UCFG_ARB.ucfg_pipestg_inst */lscc_pcie_x4_inst/NEW_AXI_DMA.pcie_axi_sgdma_inst/NO_UCFG_ARB.ucfg_pipestg_2_inst */lscc_pcie_x4_inst/NEW_AXI_DMA.pcie_axi_sgdma_inst/tx_tlp_arbiter/GEN3X4.tx_2_to_1_inst/tx_pipestg_2 }]
+ldc_set_location -site {R2C2D} [ldc_get_groups TX_2STG]
+ldc_create_group -name TX_4STG -bbox {4 30} [get_cells {*/lscc_pcie_x4_inst/NEW_AXI_DMA.pcie_axi_sgdma_inst/tx_tlp_arbiter/GEN3X4.tx_2_to_1_inst/tx_pipestg */lscc_pcie_x4_inst/NEW_AXI_DMA.pcie_axi_sgdma_inst/UCFG_READER.ucfg_reader_inst}]
+ldc_set_location -site {R5C2D} [ldc_get_groups TX_4STG]
+ldc_create_group -name TX_DC_FIFO -bbox {4 30} [get_cells {*/lscc_pcie_x4_inst/NEW_AXI_DMA.pcie_axi_sgdma_inst/tx_tlp_arbiter/GEN3X4.tx_2_to_1_inst/TLP_INTF_128.tx_tlp_dc_fifo_inst0 */lscc_pcie_x4_inst/NEW_AXI_DMA.pcie_axi_sgdma_inst/tx_tlp_arbiter/GEN3X4.tx_2_to_1_inst/TLP_INTF_128.tx_tlp_dc_fifo_inst1 }]
+ldc_set_location -site {EBR_CORE_R10C2} [ldc_get_groups TX_DC_FIFO]
+ldc_create_group -name DATA_FLOP2 -bbox {1 30} [get_cells {*/lscc_pcie_x4_inst/NEW_AXI_DMA.pcie_axi_sgdma_inst/tx_tlp_arbiter/GEN3X4.tx_2_to_1_inst/tx_dcfifo_data_flop2 }]
+ldc_set_location -site {R9C2D} [ldc_get_groups DATA_FLOP2]
+set_max_delay -from [get_pins {rs_pixel_inst/lscc_reset_inst/*u_lscc_reset_async/rst_sync*[0]*/Q}] -to [get_pins {rs_pixel_inst/lscc_reset_inst/*u_lscc_reset_async/rst_sync*[1]*/D*}] -datapath_only 6.667
+set_max_delay -from [get_pins {rs_pixel_inst/lscc_reset_inst/*u_lscc_reset_async/rstn_sync*[0]*/Q}] -to [get_pins {rs_pixel_inst/lscc_reset_inst/*u_lscc_reset_async/rstn_sync*[1]*/D*}] -datapath_only 6.667
+set_false_path -to [get_pins {rs_pixel_inst/lscc_reset_inst/*u_lscc_reset_async/rst_sync*[*]*/LSR}]
+set_false_path -to [get_pins {rs_pixel_inst/lscc_reset_inst/*u_lscc_reset_async/rstn_sync*[*]*/LSR}]
+set_max_delay -from [get_pins {rs_dma_inst/lscc_reset_inst/*u_lscc_reset_async/rst_sync*[0]*/Q}] -to [get_pins {rs_dma_inst/lscc_reset_inst/*u_lscc_reset_async/rst_sync*[1]*/D*}] -datapath_only 8
+set_max_delay -from [get_pins {rs_dma_inst/lscc_reset_inst/*u_lscc_reset_async/rstn_sync*[0]*/Q}] -to [get_pins {rs_dma_inst/lscc_reset_inst/*u_lscc_reset_async/rstn_sync*[1]*/D*}] -datapath_only 8
+set_false_path -to [get_pins {rs_dma_inst/lscc_reset_inst/*u_lscc_reset_async/rst_sync*[*]*/LSR}]
+set_false_path -to [get_pins {rs_dma_inst/lscc_reset_inst/*u_lscc_reset_async/rstn_sync*[*]*/LSR}]
+set_false_path -to [get_pins -hierarchical {*RPRST}]
+set_false_path -to [get_pins -hierarchical {*RSTW}]
+
+set_clock_uncertainty -setup 0.250 [get_clocks sys_clk_pll_inst_clkop_o_net]
+set_clock_uncertainty -setup 0.400 [get_clocks sys_clk_pll_inst_clkos_o_net]
+set_clock_uncertainty -setup 0.500 [get_clocks sys_clk_pll_inst_clkos2_o_net]
+set_clock_uncertainty -setup 0.333 [get_clocks sys_clk_pll_inst_clkos3_o_net]
