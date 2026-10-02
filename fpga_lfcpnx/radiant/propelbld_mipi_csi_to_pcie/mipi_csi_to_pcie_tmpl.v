@@ -22,7 +22,7 @@
 //  OR ITS CONTENTS WILL BE UNINTERRUPTED OR ERROR FREE, OR THAT DEFECTS
 //  HEREIN WILL BE CORRECTED.  LICENSEE ASSUMES RESPONSIBILITY FOR 
 //  SELECTION OF MATERIALS TO ACHIEVE ITS INTENDED RESULTS, AND FOR THE
-//  PROPER INSTALLATION, USE, AND RESULTS OBTAINED THEREFROM.  LICENSEE
+//  PROPER INSTALLATION, USE, AND RESULTS OBTAINED THERE FROM.  LICENSEE
 //  ASSUMES THE ENTIRE RISK OF THE FILE AND ITS CONTENTS PROVING DEFECTIVE
 //  OR FAILING TO PERFORM PROPERLY AND IN SUCH EVENT, LICENSEE SHALL
 //  ASSUME THE ENTIRE COST AND RISK OF ANY REPAIR, SERVICE, CORRECTION, OR
@@ -43,11 +43,11 @@
 
 mipi_csi_to_pcie _inst (.pcie_refclkn_i(), 
                         .pcie_refclkp_i(), 
-                        .cam_scl_io(), 
-                        .cam_sda_io(), 
                         .d_n_io(), 
                         .d_p_io(), 
                         .cam_reset_n_o(), 
                         .clk_n_io(), 
                         .clk_p_io(), 
+                        .cam_scl_io(), 
+                        .cam_sda_io(), 
                         .clk_125mhz());

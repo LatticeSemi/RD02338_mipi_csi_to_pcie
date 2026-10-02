@@ -8,9 +8,6 @@
 
 #include <linux/i2c.h>
 
-/* Forward declaration */
-struct lsc_pcie;
-
 #define LSC_I2C_WR_DATA_REG       0x00
 #define LSC_I2C_RD_DATA_REG       0x00
 #define LSC_I2C_TARGET_ADDR_L_REG 0x04
@@ -49,19 +46,18 @@ struct lsc_pcie;
  * struct lsc_pcie_i2c - Lattice PCIe I2C device structure
  * @adapter: Linux I2C adapter structure
  * @base: Remapped I/O memory base for I2C registers
- * @lpcie: Pointer to the main PCIe device structure
  * @lock: Mutex for I2C access
  */
 struct lsc_pcie_i2c {
+    struct device *dev;
     struct i2c_adapter adapter;
-    void __iomem *base;
-    struct lsc_pcie *lpcie;
+    void __iomem *reg_base;
     struct mutex lock;
 };
 
 /* Function Prototypes */
-int lsc_pcie_i2c_probe(struct lsc_pcie *lpcie);
-void lsc_pcie_i2c_remove(struct lsc_pcie *lpcie);
+struct lsc_pcie_i2c *lsc_pcie_i2c_probe(struct device *dev, void __iomem *base);
+void lsc_pcie_i2c_remove(struct lsc_pcie_i2c *pcie_i2c);
 
 #endif /* __LSC_PCIE_I2C_H__ */
 

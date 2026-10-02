@@ -11,6 +11,7 @@ ifneq ($(KERNELRELEASE),)
 
 obj-m := lsc_pcie_video_bridge.o
 lsc_pcie_video_bridge-y = \
+   lsc_pcie_video.o \
    lsc_pcie_core.o \
    lsc_pcie_dma.o \
    lsc_pcie_v4l2.o \

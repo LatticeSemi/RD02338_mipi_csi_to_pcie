@@ -4,12 +4,15 @@
  */
 
 #include "lsc_pcie_dma.h"
+#include "lsc_pcie_regs.h"
 
 #include <linux/bitfield.h>
 #include <linux/delay.h>
 #include <linux/iopoll.h>
+#include <linux/minmax.h>
 
 #define DESCRIPTOR_PRINT_LIMIT 20
+#define MAX_SG_CHUNK_SIZE (256 * 1024)
 
 static const struct dma_register_offsets f2h_reg_offsets = {
     .ctrl = F2H_DMA_CTRL,
@@ -223,11 +226,6 @@ int lsc_pcie_dma_start_transfer(struct lsc_pcie *lpcie, struct lsc_pcie_dma_buff
 
 /**
  * lsc_pcie_dma_stop_transfer - Gracefully stop a running DMA transfer.
- *
- * Sets EOP + INT on the first buffer's last descriptor so the hardware
- * finishes the current descriptor chain and raises a completion interrupt.
- * Sleeps after the descriptor update to let the DMA engine drain.
- *
  * Return: 0 on success, negative error code on failure.
  */
 int lsc_pcie_dma_stop_transfer(struct lsc_pcie *lpcie, enum dma_direction direction)
@@ -238,10 +236,10 @@ int lsc_pcie_dma_stop_transfer(struct lsc_pcie *lpcie, enum dma_direction direct
     struct lsc_pcie_dma_buffer *first_dma_buffer;
     struct lsc_pcie_dma_desc *descriptors;
     struct sg_table *table;
-    u32 num_sg = 0;
     u32 status;
-    int cont_desc_rem = 0;
+    u32 read_val = 0;
     int first_chunk_idx = 0;
+    int ret = 0;
     const char *direction_str = lsc_pcie_dma_direction_to_str(direction);
     unsigned long flags;
 
@@ -255,37 +253,49 @@ int lsc_pcie_dma_stop_transfer(struct lsc_pcie *lpcie, enum dma_direction direct
         return -EINVAL;
     }
 
-    /* Get the last chunk's descriptor table and entry */
     table = first_dma_buffer->sgt;
     if (!table) {
-        dev_err(&lpcie->pdev->dev, "%s DMA Stop: NULL sg_table for last buffer[%d]\n", direction_str, first_chunk_idx);
+        dev_err(&lpcie->pdev->dev, "%s DMA Stop: NULL sg_table for buffer[%d]\n", direction_str, first_chunk_idx);
         return -EINVAL;
     }
 
     descriptors = first_dma_buffer->descs;
     if (!descriptors) {
-        dev_err(&lpcie->pdev->dev, "%s DMA Stop: NULL descriptor for last buffer[%d]\n", direction_str, first_chunk_idx);
+        dev_err(&lpcie->pdev->dev, "%s DMA Stop: NULL descriptor for buffer[%d]\n", direction_str, first_chunk_idx);
         return -EINVAL;
     }
 
-    /* Get num_sg from the last chunk (not chunk 0) */
-    num_sg = table->nents;
     if (first_dma_buffer->total_desc == 0) {
-        dev_err(&lpcie->pdev->dev, "%s DMA Stop: Invalid num_sg (%d) for last buffer[%d]\n", direction_str, num_sg, first_chunk_idx);
+        dev_err(&lpcie->pdev->dev, "%s DMA Stop: Invalid total_desc for buffer[%d]\n", direction_str, first_chunk_idx);
         return -EINVAL;
     }
-
-    cont_desc_rem = (num_sg) % CONT_DESC_MAX;
 
     dev_info(&lpcie->pdev->dev, "DMA Stop\n");
 
-    descriptors[first_dma_buffer->total_desc - 1].desc_ctrl =
-        ((num_sg) >= CONT_DESC_MAX ? CONT_DESC_64 : cont_desc_rem) << CONT_DESC_SHIFT |
-        INT_ENABLE << INT_SHIFT |
-        EOP;
+    lsc_pcie_write_dma_reg32(lpcie, dma_reg_offsets->ctrl_2, 0x1);
+    ret = read_poll_timeout(lsc_pcie_read_dma_reg32, read_val,
+            read_val == 0x1,
+            1000,       /* sleep 1ms between polls */
+            100000,     /* timeout after 100ms     */
+            false,      /* don't sleep before first read */
+            lpcie, dma_reg_offsets->ctrl_2);
+    if (ret) {
+        pr_err("DMA CTRL_2: %x, expected: 1 (timed out)\n", read_val);
+        return -ETIMEDOUT;
+    }
+    dev_info(&lpcie->pdev->dev, "Initiating DMA stop... Stop Bit: %d", lsc_pcie_read_dma_reg32(lpcie, dma_reg_offsets->ctrl_2));
 
-    /* Pause for 0.5 seconds to allow DMA hardware to process descriptor changes */
-    msleep(500);
+    ret = read_poll_timeout(lsc_pcie_read_dma_reg32, read_val,
+            read_val == 0x0,
+            1000,       /* sleep 1ms between polls */
+            100000,     /* timeout after 100ms     */
+            false,      /* don't sleep before first read */
+            lpcie, dma_reg_offsets->ctrl_2);
+    if (ret) {
+        pr_err("DMA CTRL_2: %x, expected: 0 (timed out)\n", read_val);
+        return -ETIMEDOUT;
+    }
+    dev_info(&lpcie->pdev->dev, "DMA stop completed... Stop Bit: %d", lsc_pcie_read_dma_reg32(lpcie, dma_reg_offsets->ctrl_2));
 
     status = lsc_pcie_read_dma_reg32(lpcie, dma_reg_offsets->sts);
     dev_info(&lpcie->pdev->dev, "DMA Status: %X, DMA Interrupt Done: %ld, DMA EOP Done: %ld, Busy: %ld\n",
@@ -331,7 +341,48 @@ static void lsc_pcie_dma_print_desc(struct lsc_pcie *lpcie, struct lsc_pcie_dma_
 }
 
 /**
+ * lsc_pcie_dma_count_descriptors - Count descriptors needed for an SG table.
+ *
+ * Walks the DMA-mapped segments (sg_dma_len), subdividing each into chunks of
+ * at most MAX_SG_CHUNK_SIZE, and clamps the total to target_size bytes. This
+ * MUST use the exact same chunking and clamping math as lsc_pcie_dma_desc_fill
+ * so the allocated descriptor count matches the number actually written.
+ *
+ * Return: number of descriptors required (0 if the table covers no bytes).
+ */
+static u32 lsc_pcie_dma_count_descriptors(struct sg_table *table, size_t target_size)
+{
+    struct scatterlist *sg;
+    u32 total_desc = 0;
+    size_t remaining = target_size;
+    int i;
+
+    for_each_sg(table->sgl, sg, table->nents, i) {
+        unsigned int seg_len = sg_dma_len(sg);
+
+        while (seg_len > 0 && remaining > 0) {
+            size_t chunk = min3((size_t)seg_len, (size_t)MAX_SG_CHUNK_SIZE, remaining);
+
+            total_desc++;
+            seg_len -= chunk;
+            remaining -= chunk;
+        }
+
+        if (remaining == 0)
+            break;
+    }
+
+    return total_desc;
+}
+
+/**
  * lsc_pcie_dma_desc_fill - Populate DMA descriptors from an SG table.
+ *
+ * Walks the DMA-mapped segments (sg_dma_address / sg_dma_len), subdividing each
+ * into chunks of at most MAX_SG_CHUNK_SIZE and clamping the total to the frame
+ * size (buffer_size_in_bytes). Working purely in the DMA-mapped domain keeps the
+ * descriptors correct under a full-translation IOMMU, where mapped segments may
+ * be coalesced and differ from the CPU-side page list.
  *
  * Fills every descriptor with control flags, lengths, and addresses.
  * For F2H the source is the FPGA (calculated from fpga_base_addr) and the
@@ -344,54 +395,69 @@ static void lsc_pcie_dma_desc_fill(struct lsc_pcie *lpcie, struct lsc_pcie_dma_b
     struct lsc_pcie_dma_desc *descriptors = dma_buffer->descs;
     struct sg_table *table = dma_buffer->sgt;
     struct scatterlist *sg;
-    u32 total_nents = table->nents;
-    u32 last_desc_index = total_nents - 1;
+    u32 total_desc = dma_buffer->total_desc;
+    u32 last_desc_index = total_desc - 1;
     u32 cont_desc_rem = 0;
     u32 cont_desc_transition_index = 0;
     u32 desc_addr_offset = 0;
+    size_t remaining = dma_buffer->buffer_size_in_bytes;
+    u32 desc_index = 0;
     int i;
 
     /* Calculate CONT_DESC values upfront using old algorithm
-     * When total_nents >= 64, CONT_DESC and NEXT_DESC_ADDR are set for ALL entries.
+     * When total_desc >= 64, CONT_DESC and NEXT_DESC_ADDR are set for ALL entries.
      * The algorithm uses second_last_desc to determine which entries get CONT_DESC_64
      * vs cont_desc_rem. The last entry of the chunk is handled by lsc_pcie_dma_desc_last_entry_update.
      */
-    if (total_nents >= CONT_DESC_MAX) {
-        cont_desc_rem = total_nents % CONT_DESC_MAX;
+    if (total_desc >= CONT_DESC_MAX) {
+        cont_desc_rem = total_desc % CONT_DESC_MAX;
         /* Calculate cont_desc_transition_index: index where we transition from CONT_DESC_64 to cont_desc_rem
-         * For total_nents = 150: last_desc_index = 149, cont_desc_rem = 22, second_last_desc = 127
-         * For total_nents = 128: last_desc_index = 127, cont_desc_rem = 0, second_last_desc = 63
+         * For total_desc = 150: last_desc_index = 149, cont_desc_rem = 22, second_last_desc = 127
+         * For total_desc = 128: last_desc_index = 127, cont_desc_rem = 0, second_last_desc = 63
          */
         cont_desc_transition_index = last_desc_index - (cont_desc_rem == 0 ? CONT_DESC_MAX : cont_desc_rem);
-        dev_dbg(&lpcie->pdev->dev, "Total SG: %d, transition_idx: %d, cont_desc_rem: %d in last_desc_index: %d\n",
-            total_nents, cont_desc_transition_index, cont_desc_rem, last_desc_index);
+        dev_dbg(&lpcie->pdev->dev, "Total Desc: %d, transition_idx: %d, cont_desc_rem: %d in last_desc_index: %d\n",
+            total_desc, cont_desc_transition_index, cont_desc_rem, last_desc_index);
     }
 
-    for_each_sg(table->sgl, sg, total_nents, i) {
-        u64 host_addr = sg_dma_address(sg);
-        u64 fpga_addr = dma_buffer->fpga_base_addr + desc_addr_offset;
-        u64 src_address = (direction == DMA_DIR_F2H) ? fpga_addr : host_addr;
-        u64 dest_address = (direction == DMA_DIR_F2H) ? host_addr : fpga_addr;
+    for_each_sg(table->sgl, sg, table->nents, i) {
+        u64 seg_addr = sg_dma_address(sg);
+        unsigned int seg_len = sg_dma_len(sg);
+        unsigned int seg_offset = 0;
 
-        u32 cont_desc_value = total_nents >= CONT_DESC_MAX ? (i < cont_desc_transition_index ? CONT_DESC_64 : cont_desc_rem) : total_nents;
-        unsigned int dma_len = sg_dma_len(sg);
-        u64 next_desc_addr = dma_buffer->desc_dma_handle + (sizeof(struct lsc_pcie_dma_desc) * (i + 1));
-        desc_addr_offset += dma_len;
+        while (seg_len > 0 && remaining > 0) {
+            u32 dma_len = (u32)min3((size_t)seg_len, (size_t)MAX_SG_CHUNK_SIZE, remaining);
+            u64 host_addr = seg_addr + seg_offset;
+            u64 fpga_addr = dma_buffer->fpga_base_addr + desc_addr_offset;
+            u64 src_address = (direction == DMA_DIR_F2H) ? fpga_addr : host_addr;
+            u64 dest_address = (direction == DMA_DIR_F2H) ? host_addr : fpga_addr;
 
-        /* Set control word with CONT_DESC, INT=0, EOP=0 for all entries */
-        descriptors[i].desc_ctrl = (cont_desc_value << CONT_DESC_SHIFT) | (INT_NOT_ENABLE << INT_SHIFT) | NOT_EOP;
-        descriptors[i].dma_len = dma_len;
-        descriptors[i].next_desc_addr_lo = (u32)(next_desc_addr & 0xFFFFFFFF);
-        descriptors[i].next_desc_addr_hi = (u32)(next_desc_addr >> 32);
-        descriptors[i].src_addr_lo = src_address & 0xffffffff;
-        descriptors[i].src_addr_hi = src_address >> 32;
-        descriptors[i].dest_addr_lo = dest_address & 0xffffffff;
-        descriptors[i].dest_addr_hi = dest_address >> 32;
+            u32 cont_desc_value = total_desc >= CONT_DESC_MAX ? (desc_index < cont_desc_transition_index ? CONT_DESC_64 : cont_desc_rem) : total_desc;
+            u64 next_desc_addr = dma_buffer->desc_dma_handle + (sizeof(struct lsc_pcie_dma_desc) * (desc_index + 1));
 
-        if (lsc_pcie_dma_should_print_desc(i, dma_buffer->total_desc)) {
-            lsc_pcie_dma_print_desc(lpcie, &descriptors[i], buffer_index, i, direction);
+            /* Set control word with CONT_DESC, INT=0, EOP=0 for all entries */
+            descriptors[desc_index].desc_ctrl = (cont_desc_value << CONT_DESC_SHIFT) | (INT_NOT_ENABLE << INT_SHIFT) | NOT_EOP;
+            descriptors[desc_index].dma_len = dma_len;
+            descriptors[desc_index].next_desc_addr_lo = (u32)(next_desc_addr & 0xFFFFFFFF);
+            descriptors[desc_index].next_desc_addr_hi = (u32)(next_desc_addr >> 32);
+            descriptors[desc_index].src_addr_lo = src_address & 0xffffffff;
+            descriptors[desc_index].src_addr_hi = src_address >> 32;
+            descriptors[desc_index].dest_addr_lo = dest_address & 0xffffffff;
+            descriptors[desc_index].dest_addr_hi = dest_address >> 32;
+
+            if (lsc_pcie_dma_should_print_desc(desc_index, dma_buffer->total_desc)) {
+                lsc_pcie_dma_print_desc(lpcie, &descriptors[desc_index], buffer_index, desc_index, direction);
+            }
+
+            desc_addr_offset += dma_len;
+            seg_offset += dma_len;
+            seg_len -= dma_len;
+            remaining -= dma_len;
+            desc_index++;
         }
 
+        if (remaining == 0)
+            break;
     }
 }
 
@@ -487,9 +553,15 @@ void lsc_pcie_dma_buffer_cleanup(struct lsc_pcie *lpcie, struct lsc_pcie_dma_buf
 static int lsc_pcie_dma_desc_init(struct lsc_pcie *lpcie, struct lsc_pcie_dma_buffer *dma_buffer, u16 buffer_index, enum dma_direction direction)
 {
     const char *direction_str = lsc_pcie_dma_direction_to_str(direction);
-    u32 total_desc = dma_buffer->sgt->nents;
+    u32 total_desc = lsc_pcie_dma_count_descriptors(dma_buffer->sgt, dma_buffer->buffer_size_in_bytes);
     size_t total_desc_size_in_bytes = total_desc * sizeof(struct lsc_pcie_dma_desc);
     size_t total_desc_in_last_chunk = 0;
+
+    if (total_desc == 0) {
+        dev_err(&lpcie->pdev->dev, "Buffers[%d]: SG table covers no bytes for frame size %zu\n",
+            buffer_index, dma_buffer->buffer_size_in_bytes);
+        return -EINVAL;
+    }
 
     dev_dbg(&lpcie->pdev->dev, "Buffers[%d]: Total Descriptors to be allocated = %d, total size = %zu bytes\n", buffer_index, total_desc, total_desc_size_in_bytes);
 

@@ -11,12 +11,8 @@
 #include <linux/i2c.h>
 #include <linux/media-bus-format.h>
 #include <linux/videodev2.h>
-#include <media/videobuf2-v4l2.h>
-#include <media/videobuf2-dma-contig.h>
-#include <media/videobuf2-dma-sg.h>
-#include <media/v4l2-common.h>
 #include <media/v4l2-ctrls.h>
-#include <media/v4l2-ioctl.h>
+#include <media/v4l2-device.h>
 #include <media/v4l2-subdev.h>
 
 
@@ -27,7 +23,8 @@ module_param(csi_lanes, int, 0444);
 MODULE_PARM_DESC(csi_lanes, "Number of MIPI lanes (default: 4)");
 
 struct lsc_csi_priv {
-    struct lsc_pcie *lpcie;
+    struct device *dev;
+    struct lsc_pcie_i2c *pcie_i2c;
     struct v4l2_subdev *sensor_sd;
     struct i2c_client *sensor_client;
 };
@@ -88,7 +85,7 @@ static int lsc_csi_try_resolution(void *priv, u32 *width, u32 *height)
 
     ret = v4l2_subdev_call_state_try(csi_priv->sensor_sd, pad, set_fmt, &sd_fmt);
     if (ret) {
-        dev_err(&csi_priv->lpcie->pdev->dev, "Subdev set_fmt failed: %d\n", ret);
+        dev_err(csi_priv->dev, "Subdev set_fmt failed: %d\n", ret);
         return ret;
     }
 
@@ -115,7 +112,7 @@ static int lsc_csi_set_resolution(void *priv, u32 *width, u32 *height)
 
     ret = v4l2_subdev_call_state_active(csi_priv->sensor_sd, pad, set_fmt, &sd_fmt);
     if (ret) {
-        dev_err(&csi_priv->lpcie->pdev->dev, "Subdev set_fmt failed: %d\n", ret);
+        dev_err(csi_priv->dev, "Subdev set_fmt failed: %d\n", ret);
         return ret;
     }
 
@@ -212,7 +209,7 @@ static int lsc_csi_start_stream(void *priv)
 
     ret = v4l2_subdev_call(csi_priv->sensor_sd, video, s_stream, 1);
     if (ret < 0 && ret != -ENOIOCTLCMD) {
-        dev_err(&csi_priv->lpcie->pdev->dev, "Failed to start sensor stream: %d\n", ret);
+        dev_err(csi_priv->dev, "Failed to start sensor stream: %d\n", ret);
         return ret;
     }
 
@@ -240,74 +237,75 @@ static const struct lsc_video_source_ops lsc_csi_video_source_ops = {
     .stop_stream = lsc_csi_stop_stream,
 };
 
-
-static const struct property_entry imx258_props_2lane[] = {
-    PROPERTY_ENTRY_U32("clock-frequency", 27000000),
-    PROPERTY_ENTRY_U32("num-lanes", 2),
-    { }
-};
-static const struct property_entry imx258_props_4lane[] = {
-    PROPERTY_ENTRY_U32("clock-frequency", 27000000),
-    PROPERTY_ENTRY_U32("num-lanes", 4),
-    { }
-};
-static const struct software_node imx258_swnode_2lane = {
-    .properties = imx258_props_2lane,
-};
-static const struct software_node imx258_swnode_4lane = {
-    .properties = imx258_props_4lane,
-};
-
-static int lsc_csi_add_v4l2_subdev(struct lsc_csi_priv *csi_priv)
+static int lsc_csi_add_v4l2_subdev(
+    struct lsc_csi_priv *csi_priv,
+    struct v4l2_device *v4l2_dev,
+    struct v4l2_ctrl_handler *ctrl_handler)
 {
-    const struct software_node *swnode = (csi_lanes == 2) ? &imx258_swnode_2lane : &imx258_swnode_4lane;
+    struct device *dev = csi_priv->dev;
+    
+    struct property_entry imx258_props[] = {
+        PROPERTY_ENTRY_U32("clock-frequency", 27000000),
+        PROPERTY_ENTRY_U32("num-lanes", (csi_lanes == 2) ? 2 : 4),
+        { }
+    };
 
+    struct fwnode_handle *fwnode;
+    const struct software_node *swnode;
     struct i2c_board_info info = {
         I2C_BOARD_INFO("lsc-imx258", 0x1a),
-        .swnode = swnode,
     };
     struct i2c_adapter *adapter;
     struct i2c_client *client;
     struct v4l2_subdev *sd;
     int ret;
 
-    adapter = lsc_pcie_get_i2c_adapter(csi_priv->lpcie);
+    adapter = &csi_priv->pcie_i2c->adapter;
     if (!adapter) {
-        dev_err(&csi_priv->lpcie->pdev->dev, "I2C adapter not found\n");
+        dev_err(dev, "I2C adapter not found\n");
         return -EINVAL;
     }
 
+    fwnode = fwnode_create_software_node(imx258_props, NULL);
+    if (IS_ERR(fwnode)) {
+        dev_err(dev,
+                "Failed to create sensor fwnode: %ld\n", PTR_ERR(fwnode));
+        return PTR_ERR(fwnode);
+    }
+
+    swnode = to_software_node(fwnode);
+    info.swnode = swnode;
+
     client = i2c_new_client_device(adapter, &info);
     if (IS_ERR(client)) {
-        dev_err(&csi_priv->lpcie->pdev->dev,
+        dev_err(dev,
                 "Failed to create i2c client: %ld\n", PTR_ERR(client));
         return PTR_ERR(client);
     }
 
     sd = i2c_get_clientdata(client);
     if (!sd) {
-        dev_err(&csi_priv->lpcie->pdev->dev, "No subdev from i2c client\n");
+        dev_err(dev, "No subdev from i2c client\n");
         i2c_unregister_device(client);
         return -ENODEV;
     }
 
-    ret = v4l2_device_register_subdev(&csi_priv->lpcie->v4l2_dev, sd);
+    ret = v4l2_device_register_subdev(v4l2_dev, sd);
     if (ret) {
-        dev_err(&csi_priv->lpcie->pdev->dev,
+        dev_err(dev,
                 "Failed to register subdev: %d\n", ret);
         i2c_unregister_device(client);
         return ret;
     }
 
-    dev_info(&csi_priv->lpcie->pdev->dev, "Registered imx258 subdev to V4L2 device\n");
+    dev_info(dev, "Registered imx258 subdev to V4L2 device\n");
     csi_priv->sensor_sd = sd;
     csi_priv->sensor_client = client;
 
     if (sd->ctrl_handler) {
-        int ret = v4l2_ctrl_add_handler(&csi_priv->lpcie->v4l2_ctrl_handler,
-                                        sd->ctrl_handler, NULL, true);
+        int ret = v4l2_ctrl_add_handler(ctrl_handler, sd->ctrl_handler, NULL, true);
         if (ret) {
-            dev_warn(&csi_priv->lpcie->pdev->dev, "Failed to add sensor ctrl handler: %d\n", ret);
+            dev_warn(dev, "Failed to add sensor ctrl handler: %d\n", ret);
             v4l2_device_unregister_subdev(sd);
             i2c_unregister_device(client);
             return ret;
@@ -317,30 +315,42 @@ static int lsc_csi_add_v4l2_subdev(struct lsc_csi_priv *csi_priv)
 	return 0;
 }
 
-int lsc_csi_init(struct lsc_pcie *lpcie)
+int lsc_csi_init(
+    struct lsc_pcie_i2c *pcie_i2c,
+    struct v4l2_device *v4l2_dev,
+    struct v4l2_ctrl_handler *ctrl_handler,
+    struct lsc_video_source **video_src_out)
 {
+    struct device *dev = pcie_i2c->adapter.dev.parent;
     struct lsc_video_source *video_src;
     struct lsc_csi_priv *csi_priv;
     int ret;
 
     csi_priv = kzalloc(sizeof(*csi_priv), GFP_KERNEL);
     if (!csi_priv) {
-        dev_err(&lpcie->pdev->dev, "Failed to allocate memory for CSI private data\n");
+        dev_err(dev, "Failed to allocate memory for CSI private data\n");
         return -ENOMEM;
     }
 
-    csi_priv->lpcie = lpcie;
+    csi_priv->pcie_i2c = pcie_i2c;
+    csi_priv->dev = dev;
 
-    ret = lsc_csi_add_v4l2_subdev(csi_priv);
+    ret = lsc_csi_add_v4l2_subdev(csi_priv, v4l2_dev, ctrl_handler);
     if (ret) {
-        dev_err(&lpcie->pdev->dev, "Failed to add v4l2 subdev\n");
+        dev_err(dev, "Failed to add v4l2 subdev\n");
         kfree(csi_priv);
         return ret;
     }
 
     video_src = kzalloc(sizeof(*video_src), GFP_KERNEL);
     if (!video_src) {
-        dev_err(&lpcie->pdev->dev, "Failed to allocate video source\n");
+        dev_err(dev, "Failed to allocate video source\n");
+        if (csi_priv->sensor_sd) {
+            v4l2_device_unregister_subdev(csi_priv->sensor_sd);
+        }
+        if (csi_priv->sensor_client) {
+            i2c_unregister_device(csi_priv->sensor_client);
+        }
         kfree(csi_priv);
         return -ENOMEM;
     }
@@ -348,34 +358,33 @@ int lsc_csi_init(struct lsc_pcie *lpcie)
     video_src->ops = &lsc_csi_video_source_ops;
     video_src->priv = csi_priv;
 
-    lpcie->video_src = video_src;
-    dev_info(&lpcie->pdev->dev, "CSI initialized successfully\n");
+    *video_src_out = video_src;
+    dev_info(dev, "CSI initialized successfully\n");
 
     return 0;
 }
 
-void lsc_csi_cleanup(struct lsc_pcie *lpcie)
+void lsc_csi_cleanup(struct lsc_video_source *video_src)
 {
     struct lsc_csi_priv *csi_priv;
 
-    if (!lpcie->video_src)
+    if (!video_src)
         return;
 
-    csi_priv = lpcie->video_src->priv;
+    csi_priv = video_src->priv;
 
     if (csi_priv) {
         if (csi_priv->sensor_sd) {
             v4l2_device_unregister_subdev(csi_priv->sensor_sd);
             csi_priv->sensor_sd = NULL;
         }
-        if (csi_priv->sensor_client){
+        if (csi_priv->sensor_client) {
             i2c_unregister_device(csi_priv->sensor_client);
             csi_priv->sensor_client = NULL;
         }
+        dev_info(csi_priv->dev, "CSI cleaned up successfully\n");
         kfree(csi_priv);
     }
 
-    kfree(lpcie->video_src);
-    lpcie->video_src = NULL;
-    dev_info(&lpcie->pdev->dev, "CSI cleaned up successfully\n");
+    kfree(video_src);
 }

@@ -22,7 +22,7 @@
 //  OR ITS CONTENTS WILL BE UNINTERRUPTED OR ERROR FREE, OR THAT DEFECTS
 //  HEREIN WILL BE CORRECTED.  LICENSEE ASSUMES RESPONSIBILITY FOR 
 //  SELECTION OF MATERIALS TO ACHIEVE ITS INTENDED RESULTS, AND FOR THE
-//  PROPER INSTALLATION, USE, AND RESULTS OBTAINED THEREFROM.  LICENSEE
+//  PROPER INSTALLATION, USE, AND RESULTS OBTAINED THERE FROM.  LICENSEE
 //  ASSUMES THE ENTIRE RISK OF THE FILE AND ITS CONTENTS PROVING DEFECTIVE
 //  OR FAILING TO PERFORM PROPERLY AND IN SUCH EVENT, LICENSEE SHALL
 //  ASSUME THE ENTIRE COST AND RISK OF ANY REPAIR, SERVICE, CORRECTION, OR
@@ -108,45 +108,47 @@ module mipi_csi_to_pcie (d_n_io, d_p_io, pcie_status_led_o, cam_reset_n_o,
     wire [31:0]axi_to_apb_inst_APB3_M_interconnect_PADDR;
     wire [31:0]axi_to_apb_inst_APB3_M_interconnect_PRDATA;
     wire [31:0]axi_to_apb_inst_APB3_M_interconnect_PWDATA;
-    wire [63:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARADDR;
-    wire [1:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARBURST;
-    wire [3:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARCACHE;
-    wire [7:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARLEN;
-    wire [2:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARPROT;
-    wire [3:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARQOS;
-    wire [2:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARSIZE;
-    wire [63:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWADDR;
-    wire [1:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWBURST;
-    wire [3:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWCACHE;
-    wire [7:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWLEN;
-    wire [2:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWPROT;
-    wire [2:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWSIZE;
-    wire [1:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_BRESP;
-    wire [31:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RDATA;
-    wire [1:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RRESP;
-    wire [31:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_WDATA;
-    wire [3:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_WSTRB;
+    wire [63:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARADDR;
+    wire [1:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARBURST;
+    wire [3:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARCACHE;
+    wire [7:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARLEN;
+    wire [2:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARPROT;
+    wire [3:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARQOS;
+    wire [2:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARSIZE;
+    wire [63:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWADDR;
+    wire [1:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWBURST;
+    wire [3:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWCACHE;
+    wire [7:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWLEN;
+    wire [2:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWPROT;
+    wire [2:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWSIZE;
+    wire [1:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_BRESP;
+    wire [31:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RDATA;
+    wire [1:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RRESP;
+    wire [31:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_WDATA;
+    wire [3:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_WSTRB;
     
     wire sys_clk_pll_inst_clkos_o_net, axi_to_apb_inst_APB3_M_interconnect_PENABLE, 
         axi_to_apb_inst_APB3_M_interconnect_PREADY, axi_to_apb_inst_APB3_M_interconnect_PSELx, 
         axi_to_apb_inst_APB3_M_interconnect_PSLVERR, axi_to_apb_inst_APB3_M_interconnect_PWRITE, 
         rs_dma_inst_dest_rst_n_net;
-    wire [7:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARID;
-    wire pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARLOCK, pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARREADY;
-    wire [7:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARUSER;
-    wire pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARVALID;
-    wire [7:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWID;
+    wire [7:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARID;
     
-    wire pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWLOCK, pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWREADY, 
-        pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWVALID;
-    wire [7:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_BID;
+    wire pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARLOCK, pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARREADY;
+    wire [7:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARUSER;
     
-    wire pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_BREADY, pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_BVALID;
-    wire [7:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RID;
+    wire pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARVALID;
+    wire [7:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWID;
     
-    wire pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RLAST, pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RREADY, 
-        pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RVALID, pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_WLAST, 
-        pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_WREADY, pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_WVALID;
+    wire pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWLOCK, pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWREADY, 
+        pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWVALID;
+    wire [7:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_BID;
+    
+    wire pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_BREADY, pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_BVALID;
+    wire [7:0]pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RID;
+    
+    wire pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RLAST, pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RREADY, 
+        pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RVALID, pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_WLAST, 
+        pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_WREADY, pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_WVALID;
     wire [95:0]isp_ccm_inst_AXI4S_M0_interconnect_TDATA;
     wire [1:0]isp_ccm_inst_AXI4S_M0_interconnect_TUSER;
     wire [95:0]isp_awb_inst_AXI4S_M0_interconnect_TDATA;
@@ -161,12 +163,11 @@ module mipi_csi_to_pcie (d_n_io, d_p_io, pcie_status_led_o, cam_reset_n_o,
     
     wire isp_debayer_inst_AXI4S_M0_interconnect_TLAST, isp_debayer_inst_AXI4S_M0_interconnect_TREADY, 
         isp_debayer_inst_AXI4S_M0_interconnect_TVALID;
-    wire [63:0]mipi_csi_rx_inst_AXI4S_VID_interconnect_TDATA;
-    wire [2:0]mipi_csi_rx_inst_AXI4S_VID_interconnect_TUSER;
+    wire [63:0]mipi_csi_rx_inst_RX_AXI4S_VID_interconnect_TDATA;
+    wire [1:0]mipi_csi_rx_inst_RX_AXI4S_VID_interconnect_TUSER;
     
-    wire mipi_csi_rx_inst_AXI4S_VID_interconnect_TLAST, mipi_csi_rx_inst_AXI4S_VID_interconnect_TREADY, 
-        mipi_csi_rx_inst_AXI4S_VID_interconnect_TVALID, sys_clk_pll_inst_clkos2_o_net, 
-        invert_module2_inst_O_net;
+    wire mipi_csi_rx_inst_RX_AXI4S_VID_interconnect_TLAST, mipi_csi_rx_inst_RX_AXI4S_VID_interconnect_TVALID, 
+        mipi_csi_rx_inst_RX_AXI4S_VID_interconnect_TREADY, sys_clk_pll_inst_clkos2_o_net;
     wire [3:0]concat_module1_inst_BUS_netbus;
     wire [3:0]concat_module3_inst_BUS_netbus;
     wire [3:0]pcie_axis_dma_inst_link0_txn_o_netbus;
@@ -184,102 +185,91 @@ module mipi_csi_to_pcie (d_n_io, d_p_io, pcie_status_led_o, cam_reset_n_o,
         sys_clk_pll_inst_lock_o_net, split_A_net, video_pcie_bridge_inst_pcie_dma_int_req_o_net, 
         video_pcie_bridge_inst_start_streaming_net;
     
-    assign cpnx_versa_pcie_sw2_pd_o = cpnx_versa_pcie_sw1_pd_o;
-    assign cpnx_versa_pcie_sw_sel_o = cpnx_versa_pcie_sw1_pd_o;
     assign rst_led = rst_n;
     
     assign concat_BUS_netbus[0] = video_pcie_bridge_inst_pcie_dma_int_req_o_net;
-
     assign concat_module1_inst_BUS_netbus[3] = pcie_sd3_rxdn_i;
  assign concat_module1_inst_BUS_netbus[2] = pcie_sd2_rxdn_i;
  assign concat_module1_inst_BUS_netbus[1] = pcie_sd1_rxdn_i;
  assign concat_module1_inst_BUS_netbus[0] = pcie_sd0_rxdn_i;
-
     assign concat_module2_inst_BUS_netbus[3] = pcie_sd3_rext_i;
  assign concat_module2_inst_BUS_netbus[2] = pcie_sd2_rext_i;
  assign concat_module2_inst_BUS_netbus[1] = pcie_sd1_rext_i;
  assign concat_module2_inst_BUS_netbus[0] = pcie_sd0_rext_i;
-
     assign concat_module3_inst_BUS_netbus[3] = pcie_sd3_rxdp_i;
  assign concat_module3_inst_BUS_netbus[2] = pcie_sd2_rxdp_i;
  assign concat_module3_inst_BUS_netbus[1] = pcie_sd1_rxdp_i;
  assign concat_module3_inst_BUS_netbus[0] = pcie_sd0_rxdp_i;
-
     assign pcie_status_led_o[4] = video_pcie_bridge_inst_start_streaming_net;
  assign pcie_status_led_o[3] = sys_clk_pll_inst_lock_o_net;
  assign pcie_status_led_o[2] = pcie_axis_dma_inst_link0_tl_link_up_o_net;
  assign pcie_status_led_o[1] = pcie_axis_dma_inst_link0_pl_link_up_o_net;
  assign pcie_status_led_o[0] = pcie_axis_dma_inst_link0_dl_link_up_o_net;
-
     assign concat_module_inst_BUS_netbus[3] = pcie_sd3_refret_i;
  assign concat_module_inst_BUS_netbus[2] = pcie_sd2_refret_i;
  assign concat_module_inst_BUS_netbus[1] = pcie_sd1_refret_i;
  assign concat_module_inst_BUS_netbus[0] = pcie_sd0_refret_i;
-
-    assign cam_reset_n_o = ((pcie_perst_n_i & sys_clk_pll_inst_lock_o_net) & rst_n) ; 
-
-    assign equation_module_inst_O_net = (pcie_perst_n_i & sys_clk_pll_inst_lock_o_net) ; 
-
+    assign cam_reset_n_o = ((pcie_perst_n_i & sys_clk_pll_inst_lock_o_net) & rst_n) ;
+    assign equation_module_inst_O_net = (pcie_perst_n_i & sys_clk_pll_inst_lock_o_net) ;
     assign cpnx_versa_pcie_clk_sel_o = !1'b0;
-    assign invert_module2_inst_O_net = !cam_reset_n_o;
+    ;
     assign cpnx_versa_pcie_sw1_pd_o = !1'b1;
+    assign cpnx_versa_pcie_sw2_pd_o = !1'b1;
+    assign cpnx_versa_pcie_sw_sel_o = !1'b1;
     assign split_A_net = pcie_axis_dma_inst_usr_int_ack_o_netbus[0];
-
     assign pcie_sd3_txdp_o = pcie_axis_dma_inst_link0_txp_o_netbus[3];
  assign pcie_sd2_txdp_o = pcie_axis_dma_inst_link0_txp_o_netbus[2];
  assign pcie_sd1_txdp_o = pcie_axis_dma_inst_link0_txp_o_netbus[1];
  assign pcie_sd0_txdp_o = pcie_axis_dma_inst_link0_txp_o_netbus[0];
-
     assign pcie_sd3_txdn_o = pcie_axis_dma_inst_link0_txn_o_netbus[3];
  assign pcie_sd2_txdn_o = pcie_axis_dma_inst_link0_txn_o_netbus[2];
  assign pcie_sd1_txdn_o = pcie_axis_dma_inst_link0_txn_o_netbus[1];
  assign pcie_sd0_txdn_o = pcie_axis_dma_inst_link0_txn_o_netbus[0];
-
     axi_to_apb axi_to_apb_inst (.apb_mas_addr_o({axi_to_apb_inst_APB3_M_interconnect_PADDR}), 
             .apb_mas_rdata_i({axi_to_apb_inst_APB3_M_interconnect_PRDATA}), 
             .apb_mas_wdata_o({axi_to_apb_inst_APB3_M_interconnect_PWDATA}), 
-            .axi_slv_araddr_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARADDR[31:0]}), 
-            .axi_slv_arburst_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARBURST}), 
-            .axi_slv_arcache_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARCACHE}), 
-            .axi_slv_arlen_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARLEN}), 
-            .axi_slv_arprot_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARPROT}), 
-            .axi_slv_arqos_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARQOS}), 
-            .axi_slv_arregion_i({4'b0000}), .axi_slv_arsize_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARSIZE}), 
-            .axi_slv_awaddr_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWADDR[31:0]}), 
-            .axi_slv_awburst_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWBURST}), 
-            .axi_slv_awcache_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWCACHE}), 
-            .axi_slv_awlen_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWLEN}), 
-            .axi_slv_awprot_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWPROT}), 
+            .axi_slv_araddr_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARADDR[31:0]}), 
+            .axi_slv_arburst_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARBURST}), 
+            .axi_slv_arcache_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARCACHE}), 
+            .axi_slv_arlen_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARLEN}), 
+            .axi_slv_arprot_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARPROT}), 
+            .axi_slv_arqos_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARQOS}), 
+            .axi_slv_arregion_i({4'b0000}), .axi_slv_arsize_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARSIZE}), 
+            .axi_slv_awaddr_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWADDR[31:0]}), 
+            .axi_slv_awburst_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWBURST}), 
+            .axi_slv_awcache_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWCACHE}), 
+            .axi_slv_awlen_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWLEN}), 
+            .axi_slv_awprot_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWPROT}), 
             .axi_slv_awqos_i({4'b0000}), .axi_slv_awregion_i({4'b0000}), 
-            .axi_slv_awsize_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWSIZE}), 
-            .axi_slv_bresp_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_BRESP}), 
-            .axi_slv_rdata_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RDATA}), 
-            .axi_slv_rresp_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RRESP}), 
-            .axi_slv_wdata_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_WDATA}), 
-            .axi_slv_wstrb_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_WSTRB}), 
+            .axi_slv_awsize_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWSIZE}), 
+            .axi_slv_bresp_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_BRESP}), 
+            .axi_slv_rdata_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RDATA}), 
+            .axi_slv_rresp_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RRESP}), 
+            .axi_slv_wdata_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_WDATA}), 
+            .axi_slv_wstrb_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_WSTRB}), 
             .aclk_i(sys_clk_pll_inst_clkos_o_net), .apb_mas_en_o(axi_to_apb_inst_APB3_M_interconnect_PENABLE), 
             .apb_mas_ready_i(axi_to_apb_inst_APB3_M_interconnect_PREADY), 
             .apb_mas_sel_o(axi_to_apb_inst_APB3_M_interconnect_PSELx), .apb_mas_slverr_i(axi_to_apb_inst_APB3_M_interconnect_PSLVERR), 
             .apb_mas_write_o(axi_to_apb_inst_APB3_M_interconnect_PWRITE), 
-            .aresetn_i(rs_dma_inst_dest_rst_n_net), .axi_slv_arid_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARID[0]), 
-            .axi_slv_arlock_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARLOCK), 
-            .axi_slv_arready_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARREADY), 
-            .axi_slv_aruser_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARUSER[0]), 
-            .axi_slv_arvalid_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARVALID), 
-            .axi_slv_awid_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWID[0]), 
-            .axi_slv_awlock_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWLOCK), 
-            .axi_slv_awready_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWREADY), 
-            .axi_slv_awuser_i(1'b0), .axi_slv_awvalid_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWVALID), 
-            .axi_slv_bid_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_BID[0]), 
-            .axi_slv_bready_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_BREADY), 
-            .axi_slv_bvalid_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_BVALID), 
-            .axi_slv_rid_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RID[0]), 
-            .axi_slv_rlast_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RLAST), 
-            .axi_slv_rready_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RREADY), 
-            .axi_slv_rvalid_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RVALID), 
-            .axi_slv_wlast_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_WLAST), 
-            .axi_slv_wready_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_WREADY), 
-            .axi_slv_wuser_i(1'b0), .axi_slv_wvalid_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_WVALID));
+            .aresetn_i(rs_dma_inst_dest_rst_n_net), .axi_slv_arid_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARID[0]), 
+            .axi_slv_arlock_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARLOCK), 
+            .axi_slv_arready_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARREADY), 
+            .axi_slv_aruser_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARUSER[0]), 
+            .axi_slv_arvalid_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARVALID), 
+            .axi_slv_awid_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWID[0]), 
+            .axi_slv_awlock_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWLOCK), 
+            .axi_slv_awready_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWREADY), 
+            .axi_slv_awuser_i(1'b0), .axi_slv_awvalid_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWVALID), 
+            .axi_slv_bid_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_BID[0]), 
+            .axi_slv_bready_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_BREADY), 
+            .axi_slv_bvalid_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_BVALID), 
+            .axi_slv_rid_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RID[0]), 
+            .axi_slv_rlast_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RLAST), 
+            .axi_slv_rready_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RREADY), 
+            .axi_slv_rvalid_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RVALID), 
+            .axi_slv_wlast_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_WLAST), 
+            .axi_slv_wready_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_WREADY), 
+            .axi_slv_wuser_i(1'b0), .axi_slv_wvalid_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_WVALID));
     i2c_ctrl i2c_ctrl_inst (.apb_paddr_i({axi_to_apb_inst_APB3_M_interconnect_PADDR[5:0]}), 
             .apb_prdata_o({axi_to_apb_inst_APB3_M_interconnect_PRDATA}), .apb_pwdata_i({axi_to_apb_inst_APB3_M_interconnect_PWDATA}), 
             .apb_penable_i(axi_to_apb_inst_APB3_M_interconnect_PENABLE), .apb_pready_o(axi_to_apb_inst_APB3_M_interconnect_PREADY), 
@@ -302,50 +292,51 @@ module mipi_csi_to_pcie (d_n_io, d_p_io, pcie_status_led_o, cam_reset_n_o,
             .rx_tready_o(isp_debayer_inst_AXI4S_M0_interconnect_TREADY), .rx_tvalid_i(isp_debayer_inst_AXI4S_M0_interconnect_TVALID), 
             .tx_tlast_o(isp_ccm_inst_AXI4S_M0_interconnect_TLAST), .tx_tready_i(isp_ccm_inst_AXI4S_M0_interconnect_TREADY), 
             .tx_tvalid_o(isp_ccm_inst_AXI4S_M0_interconnect_TVALID));
-    isp_debayer isp_debayer_inst (.rx_tdata_i({mipi_csi_rx_inst_AXI4S_VID_interconnect_TDATA}), 
-            .rx_tuser_i({mipi_csi_rx_inst_AXI4S_VID_interconnect_TUSER[1:0]}), 
+    isp_debayer isp_debayer_inst (.rx_tdata_i({mipi_csi_rx_inst_RX_AXI4S_VID_interconnect_TDATA}), 
+            .rx_tuser_i({mipi_csi_rx_inst_RX_AXI4S_VID_interconnect_TUSER}), 
             .tx_tdata_o({isp_debayer_inst_AXI4S_M0_interconnect_TDATA}), .tx_tuser_o({isp_debayer_inst_AXI4S_M0_interconnect_TUSER}), 
-            .axis_rx_arstn_i(rs_pixel_inst_dest_rst_n_net), .axis_rx_clk_i(sys_clk_pll_inst_clkos3_o_net), 
-            .axis_tx_arstn_i(rs_pixel_inst_dest_rst_n_net), .axis_tx_clk_i(sys_clk_pll_inst_clkos3_o_net), 
-            .rx_tlast_i(mipi_csi_rx_inst_AXI4S_VID_interconnect_TLAST), .rx_tready_o(mipi_csi_rx_inst_AXI4S_VID_interconnect_TREADY), 
-            .rx_tvalid_i(mipi_csi_rx_inst_AXI4S_VID_interconnect_TVALID), 
-            .tx_tlast_o(isp_debayer_inst_AXI4S_M0_interconnect_TLAST), .tx_tready_i(isp_debayer_inst_AXI4S_M0_interconnect_TREADY), 
-            .tx_tvalid_o(isp_debayer_inst_AXI4S_M0_interconnect_TVALID));
-    mipi_csi_rx mipi_csi_rx_inst (.axis_vid_tdata_o({mipi_csi_rx_inst_AXI4S_VID_interconnect_TDATA}), 
-            .axis_vid_tuser_o({mipi_csi_rx_inst_AXI4S_VID_interconnect_TUSER}), 
+            .axis_rx_clk_i(sys_clk_pll_inst_clkos3_o_net), .axis_rx_arstn_i(rs_pixel_inst_dest_rst_n_net), 
+            .axis_tx_clk_i(sys_clk_pll_inst_clkos3_o_net), .axis_tx_arstn_i(rs_pixel_inst_dest_rst_n_net), 
+            .rx_tlast_i(mipi_csi_rx_inst_RX_AXI4S_VID_interconnect_TLAST), 
+            .rx_tvalid_i(mipi_csi_rx_inst_RX_AXI4S_VID_interconnect_TVALID), 
+            .rx_tready_o(mipi_csi_rx_inst_RX_AXI4S_VID_interconnect_TREADY), 
+            .tx_tready_i(isp_debayer_inst_AXI4S_M0_interconnect_TREADY), .tx_tvalid_o(isp_debayer_inst_AXI4S_M0_interconnect_TVALID), 
+            .tx_tlast_o(isp_debayer_inst_AXI4S_M0_interconnect_TLAST));
+    mipi_csi_rx mipi_csi_rx_inst (.axis_vid_tdata_o({mipi_csi_rx_inst_RX_AXI4S_VID_interconnect_TDATA}), 
+            .axis_vid_tuser_o({mipi_csi_rx_inst_RX_AXI4S_VID_interconnect_TUSER}), 
             .d_n_io({d_n_io}), .d_p_io({d_p_io}), .axis_vid_clk_i(sys_clk_pll_inst_clkos3_o_net), 
-            .axis_vid_rstn_i(cam_reset_n_o), .axis_vid_tlast_o(mipi_csi_rx_inst_AXI4S_VID_interconnect_TLAST), 
-            .axis_vid_tready_i(mipi_csi_rx_inst_AXI4S_VID_interconnect_TREADY), 
-            .axis_vid_tvalid_o(mipi_csi_rx_inst_AXI4S_VID_interconnect_TVALID), 
-            .clk_fr_i(sys_clk_pll_inst_clkos3_o_net), .clk_n_io(clk_n_io), 
-            .clk_p_io(clk_p_io), .pll_lock_i(1'b1), .reset_fr_n_i(cam_reset_n_o), 
-            .sync_clk_i(sys_clk_pll_inst_clkos2_o_net), .sync_rst_i(invert_module2_inst_O_net));
+            .axis_vid_rst_n_i(cam_reset_n_o), .axis_vid_tlast_o(mipi_csi_rx_inst_RX_AXI4S_VID_interconnect_TLAST), 
+            .axis_vid_tready_i(mipi_csi_rx_inst_RX_AXI4S_VID_interconnect_TREADY), 
+            .axis_vid_tvalid_o(mipi_csi_rx_inst_RX_AXI4S_VID_interconnect_TVALID), 
+            .clk_n_io(clk_n_io), .clk_p_io(clk_p_io), .fr_clk_i(sys_clk_pll_inst_clkos3_o_net), 
+            .fr_rst_n_i(cam_reset_n_o), .ref_clk_i(sys_clk_pll_inst_clkos2_o_net), 
+            .ref_rst_n_i(cam_reset_n_o));
     pcie_axis_dma pcie_axis_dma_inst (.clksel_i({2'b00}), .link0_rxn_i({concat_module1_inst_BUS_netbus}), 
             .link0_rxp_i({concat_module3_inst_BUS_netbus}), .link0_txn_o({pcie_axis_dma_inst_link0_txn_o_netbus}), 
             .link0_txp_o({pcie_axis_dma_inst_link0_txp_o_netbus}), .link0_user_transactions_pending_i({1'b0}), 
-            .m0_aximm_araddr_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARADDR}), 
-            .m0_aximm_arburst_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARBURST}), 
-            .m0_aximm_arcache_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARCACHE}), 
-            .m0_aximm_arid_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARID}), 
-            .m0_aximm_arlen_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARLEN}), 
-            .m0_aximm_arprot_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARPROT}), 
-            .m0_aximm_arqos_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARQOS}), 
-            .m0_aximm_arsize_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARSIZE}), 
-            .m0_aximm_aruser_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARUSER}), 
-            .m0_aximm_awaddr_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWADDR}), 
-            .m0_aximm_awburst_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWBURST}), 
-            .m0_aximm_awcache_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWCACHE}), 
-            .m0_aximm_awid_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWID}), 
-            .m0_aximm_awlen_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWLEN}), 
-            .m0_aximm_awprot_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWPROT}), 
-            .m0_aximm_awsize_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWSIZE}), 
-            .m0_aximm_bid_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_BID}), 
-            .m0_aximm_bresp_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_BRESP}), 
-            .m0_aximm_rdata_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RDATA}), 
-            .m0_aximm_rid_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RID}), 
-            .m0_aximm_rresp_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RRESP}), 
-            .m0_aximm_wdata_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_WDATA}), 
-            .m0_aximm_wstrb_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_WSTRB}), 
+            .m0_aximm_araddr_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARADDR}), 
+            .m0_aximm_arburst_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARBURST}), 
+            .m0_aximm_arcache_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARCACHE}), 
+            .m0_aximm_arid_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARID}), 
+            .m0_aximm_arlen_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARLEN}), 
+            .m0_aximm_arprot_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARPROT}), 
+            .m0_aximm_arqos_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARQOS}), 
+            .m0_aximm_arsize_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARSIZE}), 
+            .m0_aximm_aruser_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARUSER}), 
+            .m0_aximm_awaddr_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWADDR}), 
+            .m0_aximm_awburst_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWBURST}), 
+            .m0_aximm_awcache_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWCACHE}), 
+            .m0_aximm_awid_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWID}), 
+            .m0_aximm_awlen_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWLEN}), 
+            .m0_aximm_awprot_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWPROT}), 
+            .m0_aximm_awsize_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWSIZE}), 
+            .m0_aximm_bid_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_BID}), 
+            .m0_aximm_bresp_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_BRESP}), 
+            .m0_aximm_rdata_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RDATA}), 
+            .m0_aximm_rid_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RID}), 
+            .m0_aximm_rresp_i({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RRESP}), 
+            .m0_aximm_wdata_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_WDATA}), 
+            .m0_aximm_wstrb_o({pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_WSTRB}), 
             .refret_i({concat_module_inst_BUS_netbus}), .rext_i({concat_module2_inst_BUS_netbus}), 
             .tx0_dma_axist_tdata_i({video_pcie_bridge_inst_AXI4S_PCIE_interconnect_TDATA}), 
             .usr_int_ack_o({pcie_axis_dma_inst_usr_int_ack_o_netbus}), .usr_int_req_i({concat_BUS_netbus}), 
@@ -355,30 +346,30 @@ module mipi_csi_to_pcie (d_n_io, d_p_io, pcie_status_led_o, cam_reset_n_o,
             .link0_aux_clk_i(sys_clk_pll_inst_clkos2_o_net), .link0_dl_link_up_o(pcie_axis_dma_inst_link0_dl_link_up_o_net), 
             .link0_perst_n_i(equation_module_inst_O_net), .link0_pl_link_up_o(pcie_axis_dma_inst_link0_pl_link_up_o_net), 
             .link0_rst_usr_n_i(equation_module_inst_O_net), .link0_tl_link_up_o(pcie_axis_dma_inst_link0_tl_link_up_o_net), 
-            .link0_user_aux_power_detected_i(1'b0), .m0_aximm_arlock_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARLOCK), 
-            .m0_aximm_arready_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARREADY), 
-            .m0_aximm_arvalid_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_ARVALID), 
-            .m0_aximm_awlock_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWLOCK), 
-            .m0_aximm_awready_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWREADY), 
-            .m0_aximm_awvalid_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_AWVALID), 
-            .m0_aximm_bready_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_BREADY), 
-            .m0_aximm_bvalid_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_BVALID), 
-            .m0_aximm_rlast_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RLAST), 
-            .m0_aximm_rready_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RREADY), 
-            .m0_aximm_rvalid_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_RVALID), 
-            .m0_aximm_wlast_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_WLAST), 
-            .m0_aximm_wready_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_WREADY), 
-            .m0_aximm_wvalid_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect_WVALID), 
+            .link0_user_aux_power_detected_i(1'b0), .m0_aximm_arlock_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARLOCK), 
+            .m0_aximm_arready_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARREADY), 
+            .m0_aximm_arvalid_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_ARVALID), 
+            .m0_aximm_awlock_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWLOCK), 
+            .m0_aximm_awready_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWREADY), 
+            .m0_aximm_awvalid_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_AWVALID), 
+            .m0_aximm_bready_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_BREADY), 
+            .m0_aximm_bvalid_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_BVALID), 
+            .m0_aximm_rlast_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RLAST), 
+            .m0_aximm_rready_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RREADY), 
+            .m0_aximm_rvalid_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_RVALID), 
+            .m0_aximm_wlast_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_WLAST), 
+            .m0_aximm_wready_i(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_WREADY), 
+            .m0_aximm_wvalid_o(pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect_WVALID), 
             .refclkn_i(pcie_refclkn_i), .refclkp_i(pcie_refclkp_i), .sd_pll_refclk_i(1'b0), 
             .sys_clk_i(sys_clk_pll_inst_clkop_o_net), .tx0_dma_axist_tlast_i(video_pcie_bridge_inst_AXI4S_PCIE_interconnect_TLAST), 
             .tx0_dma_axist_tready_o(video_pcie_bridge_inst_AXI4S_PCIE_interconnect_TREADY), 
             .tx0_dma_axist_tvalid_i(video_pcie_bridge_inst_AXI4S_PCIE_interconnect_TVALID), 
             .use_refmux_i(1'b0), .usr_lmmi_clk_i(sys_clk_pll_inst_clkos2_o_net), 
             .usr_lmmi_resetn_i(1'b1), .usr_lmmi_wr_rdn_i(1'b0));
-    rs_dma rs_dma_inst (.src_rst_n(equation_module_inst_O_net), .dest_clk(sys_clk_pll_inst_clkos_o_net), 
-           .dest_rst_n(rs_dma_inst_dest_rst_n_net));
-    rs_pixel rs_pixel_inst (.src_rst_n(cam_reset_n_o), .dest_clk(sys_clk_pll_inst_clkos3_o_net), 
-            .dest_rst_n(rs_pixel_inst_dest_rst_n_net));
+    rs_dma rs_dma_inst (.dest_clk(sys_clk_pll_inst_clkos_o_net), .dest_rst_n(rs_dma_inst_dest_rst_n_net), 
+           .src_rst_n(equation_module_inst_O_net));
+    rs_pixel rs_pixel_inst (.dest_clk(sys_clk_pll_inst_clkos3_o_net), .dest_rst_n(rs_pixel_inst_dest_rst_n_net), 
+            .src_rst_n(cam_reset_n_o));
     sys_clk_pll sys_clk_pll_inst (.clki_i(clk_125mhz), .clkop_o(sys_clk_pll_inst_clkop_o_net), 
             .clkos2_o(sys_clk_pll_inst_clkos2_o_net), .clkos3_o(sys_clk_pll_inst_clkos3_o_net), 
             .clkos_o(sys_clk_pll_inst_clkos_o_net), .lock_o(sys_clk_pll_inst_lock_o_net), 

@@ -6,20 +6,9 @@
 #ifndef __LSC_PCIE_CORE_H__
 #define __LSC_PCIE_CORE_H__
 
-#include "lsc_pcie_dma.h"
-#include "lsc_pcie_regs.h"
-#include "lsc_pcie_i2c.h"
-#include "video_source/lsc_video_source.h"
-
-#include <linux/i2c.h>
 #include <linux/kernel.h>
 #include <linux/pci.h>
 #include <linux/types.h>
-
-#include <media/v4l2-ctrls.h>
-#include <media/v4l2-dev.h>
-#include <media/v4l2-device.h>
-#include <media/videobuf2-v4l2.h>
 
 #ifndef MAX_PCI_BARS
 #define MAX_PCI_BARS 7
@@ -162,6 +151,11 @@ struct f2h_dma_int_mask {
 	bool rsvd1;
 };
 
+/* Forward declaration for DMA callback typedef */
+struct lsc_pcie_dma_buffer;
+
+typedef void (*lsc_pcie_dma_frame_done_cb_t)(void *priv, u32 sequence_num, u64 timestamp_ns, struct lsc_pcie_dma_buffer *completed_buf);
+
 /** Hardware DMA descriptor layout — must match FPGA register map. See DMA IP documentation. */
 struct lsc_pcie_dma_desc {
 	u32 desc_ctrl;
@@ -228,34 +222,18 @@ struct lsc_pcie_hw_info {
 	u32 link_width;
 };
 
-/** Per-device state for the Lattice PCIe video bridge driver */
+/** Per-device state for the Lattice PCIe IP core */
 struct lsc_pcie {
 	struct pci_dev *pdev;
 	void __iomem *dma_reg_base;
-	void __iomem *i2c_reg_base;
 
 	struct lsc_pcie_hw_info hw_info;
 	struct lsc_pcie_dma_engine dma;
 
-	// V4L2 and vb2 structures
-    struct video_device *vdev;
-    struct v4l2_device v4l2_dev;
-	struct v4l2_ctrl_handler v4l2_ctrl_handler;
-    struct vb2_queue vb2_vid_cap_q;  // For capture (F2H)
-    struct vb2_queue vb2_vid_out_q;  // Reserved for future H2F (video output) support
-	struct mutex lock;
-
-	struct list_head active_buf_list;
-	spinlock_t irq_lock;
-
-	struct v4l2_pix_format pix_format;
-
-	struct lsc_pcie_i2c *pcie_i2c;
-
-	struct lsc_video_source *video_src;
+	void *app_priv;
 };
 
-const int lsc_pcie_get_total_board_count(void);
+void __iomem *lsc_pcie_request_and_map_bar(struct lsc_pcie *lpcie, int bar, const char *name);
 
 static inline struct lsc_pcie_dma_buffer *lsc_pcie_get_buffer_by_index(struct list_head *head, size_t index) {
 	struct lsc_pcie_dma_buffer *entry;
@@ -302,103 +280,9 @@ static inline size_t lsc_pcie_get_total_list_entries(const struct list_head *hea
 	return readl(lpcie->dma_reg_base + offset);
  }
 
-/** I2C register access helpers (mapped via i2c_reg_base).
- *
- * Thin wrappers around readb/writeb for FPGA I2C registers.
- * mapped via i2c_reg_base (see lsc_pcie_init_board for BAR assignment).
- */
-static inline void lsc_pcie_write_i2c_reg8(struct lsc_pcie *lpcie, u16 offset, u8 value)
-{
-	writeb(value, lpcie->i2c_reg_base + offset);
-}
+struct lsc_pcie *lsc_pcie_init(struct pci_dev *pdev);
+void lsc_pcie_cleanup(struct lsc_pcie *lpcie);
 
-static inline u8 lsc_pcie_read_i2c_reg8(struct lsc_pcie *lpcie, u16 offset)
-{
-	return readb(lpcie->i2c_reg_base + offset);
-}
-
-#define lsc_pcie_poll_i2c_timeout(lpcie, reg, val, cond, sleep_us, timeout_us) \
-	readl_poll_timeout((lpcie)->i2c_reg_base + (reg), val, cond, sleep_us, timeout_us)
-
-static inline struct i2c_adapter *lsc_pcie_get_i2c_adapter(struct lsc_pcie *lpcie)
-{
-	return lpcie->pcie_i2c ? &lpcie->pcie_i2c->adapter : NULL;
-}
-
-/* Video Source Functions */
-static inline int lsc_pcie_get_source_info(struct lsc_pcie *lpcie, struct lsc_video_source_info *info)
-{
-	if (!lpcie->video_src || !lpcie->video_src->ops->get_source_info)
-		return -EINVAL;
-
-	return lpcie->video_src->ops->get_source_info(lpcie->video_src->priv, info);
-}
-
-static inline const struct lsc_video_format *lsc_pcie_enum_video_format(struct lsc_pcie *lpcie, u32 index)
-{
-	if (!lpcie->video_src || !lpcie->video_src->ops->enum_video_format)
-		return NULL;
-
-	return lpcie->video_src->ops->enum_video_format(lpcie->video_src->priv, index);
-}
-
-static inline const struct lsc_video_format *lsc_pcie_find_video_format(struct lsc_pcie *lpcie, u32 pixelformat)
-{
-	if (!lpcie->video_src || !lpcie->video_src->ops->find_format)
-		return NULL;
-
-	return lpcie->video_src->ops->find_format(lpcie->video_src->priv, pixelformat);
-}
-
-static inline int lsc_pcie_try_resolution(struct lsc_pcie *lpcie, u32 *width, u32 *height)
-{
-	if (!lpcie->video_src || !lpcie->video_src->ops->try_resolution)
-		return -EINVAL;
-
-	return lpcie->video_src->ops->try_resolution(lpcie->video_src->priv, width, height);
-}
-
-static inline int lsc_pcie_set_resolution(struct lsc_pcie *lpcie, u32 *width, u32 *height)
-{
-	if (!lpcie->video_src || !lpcie->video_src->ops->set_resolution)
-		return -EINVAL;
-
-	return lpcie->video_src->ops->set_resolution(lpcie->video_src->priv, width, height);
-}
-
-static inline int lsc_pcie_enum_frame_size(struct lsc_pcie *lpcie, u32 index, struct lsc_video_frame_size *frame_size)
-{
-	if (!lpcie->video_src || !lpcie->video_src->ops->enum_frame_size)
-		return -EINVAL;
-
-	return lpcie->video_src->ops->enum_frame_size(lpcie->video_src->priv, index, frame_size);
-}
-
-static inline int lsc_pcie_enum_frame_interval(struct lsc_pcie *lpcie, u32 index, struct lsc_video_frame_interval *frame_interval)
-{
-	if (!lpcie->video_src || !lpcie->video_src->ops->enum_frame_interval)
-		return -EINVAL;
-
-	return lpcie->video_src->ops->enum_frame_interval(lpcie->video_src->priv, index, frame_interval);
-}
-
-static inline int lsc_pcie_get_frame_interval(struct lsc_pcie *lpcie, struct lsc_video_frame_interval *frame_interval)
-{
-	if (!lpcie->video_src || !lpcie->video_src->ops->get_frame_interval)
-		return -EINVAL;
-
-	return lpcie->video_src->ops->get_frame_interval(lpcie->video_src->priv, frame_interval);
-}
-
-static inline int lsc_pcie_set_frame_interval(struct lsc_pcie *lpcie, struct lsc_video_frame_interval *frame_interval)
-{
-	if (!lpcie->video_src || !lpcie->video_src->ops->set_frame_interval)
-		return -EINVAL;
-
-	return lpcie->video_src->ops->set_frame_interval(lpcie->video_src->priv, frame_interval);
-}
-
-int lsc_pcie_start_stream(struct lsc_pcie *lpcie, struct lsc_pcie_dma_buffer *dma_buffer, enum dma_direction direction);
-int lsc_pcie_stop_stream(struct lsc_pcie *lpcie, enum dma_direction direction);
+extern const struct pci_error_handlers lsc_pcie_err_handler;
 
 #endif //__LSC_PCIE_CORE_H__

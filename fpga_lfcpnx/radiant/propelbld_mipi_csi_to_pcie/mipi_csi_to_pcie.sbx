@@ -381,7 +381,7 @@
                     <lsccip:processor>RISC-V MC;RISC-V SM;RISC-V RX;RISC-V NANO</lsccip:processor>
                 </lsccip:templateInfo>
             </lsccip:projectInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:sbxVersion>2.0</lattice:sbxVersion>
             <lattice:minRadiantVersion>2026.1</lattice:minRadiantVersion>
             <lattice:language>verilog</lattice:language>
@@ -399,7 +399,7 @@
         <ipxact:componentInstances>
             <ipxact:componentInstance>
                 <ipxact:instanceName>axi_to_apb_inst</ipxact:instanceName>
-                <ipxact:componentRef vendor="latticesemi.com" library="ip" name="axi_to_apb" version="1.4.0" />
+                <ipxact:componentRef vendor="latticesemi.com" library="ip" name="axi_to_apb" version="1.5.0" />
             </ipxact:componentInstance>
             <ipxact:componentInstance>
                 <ipxact:instanceName>concat</ipxact:instanceName>
@@ -435,7 +435,7 @@
             </ipxact:componentInstance>
             <ipxact:componentInstance>
                 <ipxact:instanceName>i2c_ctrl_inst</ipxact:instanceName>
-                <ipxact:componentRef vendor="latticesemi.com" library="ip" name="i2c_ctrl" version="2.4.0" />
+                <ipxact:componentRef vendor="latticesemi.com" library="ip" name="i2c_ctrl" version="2.4.1" />
             </ipxact:componentInstance>
             <ipxact:componentInstance>
                 <ipxact:instanceName>invert_module1_inst</ipxact:instanceName>
@@ -451,23 +451,23 @@
             </ipxact:componentInstance>
             <ipxact:componentInstance>
                 <ipxact:instanceName>isp_awb_inst</ipxact:instanceName>
-                <ipxact:componentRef vendor="latticesemi_custom" library="ip" name="isp_awb" version="1.4.0.01" />
+                <ipxact:componentRef vendor="latticesemi_custom" library="ip" name="isp_awb" version="1.4.0.03" />
             </ipxact:componentInstance>
             <ipxact:componentInstance>
                 <ipxact:instanceName>isp_ccm_inst</ipxact:instanceName>
-                <ipxact:componentRef vendor="latticesemi_custom" library="ip" name="isp_ccm" version="1.3.1.01" />
+                <ipxact:componentRef vendor="latticesemi_custom" library="ip" name="isp_ccm" version="1.3.1.03" />
             </ipxact:componentInstance>
             <ipxact:componentInstance>
                 <ipxact:instanceName>isp_debayer_inst</ipxact:instanceName>
-                <ipxact:componentRef vendor="latticesemi_custom" library="ip" name="isp_debayer" version="1.4.0.01" />
+                <ipxact:componentRef vendor="latticesemi_custom" library="ip" name="isp_debayer" version="1.4.0.03" />
             </ipxact:componentInstance>
             <ipxact:componentInstance>
                 <ipxact:instanceName>mipi_csi_rx_inst</ipxact:instanceName>
-                <ipxact:componentRef vendor="latticesemi.com" library="ip" name="mipi_csi_rx" version="1.0.0.01" />
+                <ipxact:componentRef vendor="latticesemi.com" library="ip" name="mipi_csi_rx" version="4.0.0" />
             </ipxact:componentInstance>
             <ipxact:componentInstance>
                 <ipxact:instanceName>pcie_axis_dma_inst</ipxact:instanceName>
-                <ipxact:componentRef vendor="latticesemi.com" library="ip" name="pcie_axis_dma" version="4.0.0" />
+                <ipxact:componentRef vendor="latticesemi.com" library="ip" name="pcie_axis_dma" version="4.1.0" />
             </ipxact:componentInstance>
             <ipxact:componentInstance>
                 <ipxact:instanceName>rs_dma_inst</ipxact:instanceName>
@@ -495,7 +495,7 @@
             </ipxact:componentInstance>
             <ipxact:componentInstance>
                 <ipxact:instanceName>video_pcie_bridge_inst</ipxact:instanceName>
-                <ipxact:componentRef vendor="latticesemi_custom" library="ip" name="video_pcie_bridge" version="1.1.0" />
+                <ipxact:componentRef vendor="latticesemi_custom" library="ip" name="video_pcie_bridge" version="1.1.1" />
             </ipxact:componentInstance>
         </ipxact:componentInstances>
         <ipxact:interconnections>
@@ -520,13 +520,13 @@
                 <ipxact:activeInterface busRef="AXI4S_S0" componentRef="isp_ccm_inst" />
             </ipxact:interconnection>
             <ipxact:interconnection>
-                <ipxact:name>mipi_csi_rx_inst_AXI4S_VID_interconnect</ipxact:name>
-                <ipxact:activeInterface busRef="AXI4S_VID" componentRef="mipi_csi_rx_inst" />
+                <ipxact:name>mipi_csi_rx_inst_RX_AXI4S_VID_interconnect</ipxact:name>
+                <ipxact:activeInterface busRef="RX_AXI4S_VID" componentRef="mipi_csi_rx_inst" />
                 <ipxact:activeInterface busRef="AXI4S_S0" componentRef="isp_debayer_inst" />
             </ipxact:interconnection>
             <ipxact:interconnection>
-                <ipxact:name>pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M_interconnect</ipxact:name>
-                <ipxact:activeInterface busRef="AXI_SOFT_BRIDGE_M" componentRef="pcie_axis_dma_inst" />
+                <ipxact:name>pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M_interconnect</ipxact:name>
+                <ipxact:activeInterface busRef="AXI_SOFT_BRIDGE_AXIMM_M" componentRef="pcie_axis_dma_inst" />
                 <ipxact:activeInterface busRef="AXI4_S" componentRef="axi_to_apb_inst" />
             </ipxact:interconnection>
             <ipxact:interconnection>
@@ -542,10 +542,11 @@
                 <ipxact:portReferences>
                     <ipxact:internalPortReference componentRef="equation_module1_inst" portRef="O" />
                     <ipxact:internalPortReference componentRef="invert_module2_inst" portRef="I" />
-                    <ipxact:internalPortReference componentRef="mipi_csi_rx_inst" portRef="axis_vid_rstn_i" />
-                    <ipxact:internalPortReference componentRef="mipi_csi_rx_inst" portRef="reset_fr_n_i" />
-                    <ipxact:internalPortReference componentRef="video_pcie_bridge_inst" portRef="rst_n" />
                     <ipxact:internalPortReference componentRef="rs_pixel_inst" portRef="src_rst_n" />
+                    <ipxact:internalPortReference componentRef="video_pcie_bridge_inst" portRef="rst_n" />
+                    <ipxact:internalPortReference componentRef="mipi_csi_rx_inst" portRef="axis_vid_rst_n_i" />
+                    <ipxact:internalPortReference componentRef="mipi_csi_rx_inst" portRef="fr_rst_n_i" />
+                    <ipxact:internalPortReference componentRef="mipi_csi_rx_inst" portRef="ref_rst_n_i" />
                     <ipxact:externalPortReference portRef="cam_reset_n_o" />
                 </ipxact:portReferences>
             </ipxact:adHocConnection>
@@ -554,9 +555,9 @@
                 <ipxact:displayName>equation_module_inst_O_net</ipxact:displayName>
                 <ipxact:portReferences>
                     <ipxact:internalPortReference componentRef="equation_module_inst" portRef="O" />
+                    <ipxact:internalPortReference componentRef="rs_dma_inst" portRef="src_rst_n" />
                     <ipxact:internalPortReference componentRef="pcie_axis_dma_inst" portRef="link0_perst_n_i" />
                     <ipxact:internalPortReference componentRef="pcie_axis_dma_inst" portRef="link0_rst_usr_n_i" />
-                    <ipxact:internalPortReference componentRef="rs_dma_inst" portRef="src_rst_n" />
                 </ipxact:portReferences>
             </ipxact:adHocConnection>
             <ipxact:adHocConnection>
@@ -565,14 +566,6 @@
                 <ipxact:portReferences>
                     <ipxact:internalPortReference componentRef="invert_module1_inst" portRef="O" />
                     <ipxact:externalPortReference portRef="cpnx_versa_pcie_clk_sel_o" />
-                </ipxact:portReferences>
-            </ipxact:adHocConnection>
-            <ipxact:adHocConnection>
-                <ipxact:name>invert_module2_inst_O_net</ipxact:name>
-                <ipxact:displayName>invert_module2_inst_O_net</ipxact:displayName>
-                <ipxact:portReferences>
-                    <ipxact:internalPortReference componentRef="invert_module2_inst" portRef="O" />
-                    <ipxact:internalPortReference componentRef="mipi_csi_rx_inst" portRef="sync_rst_i" />
                 </ipxact:portReferences>
             </ipxact:adHocConnection>
             <ipxact:adHocConnection>
@@ -825,12 +818,12 @@
                 <ipxact:displayName>rs_pixel_inst_dest_rst_n_net</ipxact:displayName>
                 <ipxact:portReferences>
                     <ipxact:internalPortReference componentRef="rs_pixel_inst" portRef="dest_rst_n" />
-                    <ipxact:internalPortReference componentRef="isp_debayer_inst" portRef="axis_rx_arstn_i" />
-                    <ipxact:internalPortReference componentRef="isp_debayer_inst" portRef="axis_tx_arstn_i" />
                     <ipxact:internalPortReference componentRef="isp_ccm_inst" portRef="axis_rx_arstn_i" />
                     <ipxact:internalPortReference componentRef="isp_ccm_inst" portRef="axis_tx_arstn_i" />
                     <ipxact:internalPortReference componentRef="isp_awb_inst" portRef="axis_rx_arstn_i" />
                     <ipxact:internalPortReference componentRef="isp_awb_inst" portRef="axis_tx_arstn_i" />
+                    <ipxact:internalPortReference componentRef="isp_debayer_inst" portRef="axis_rx_arstn_i" />
+                    <ipxact:internalPortReference componentRef="isp_debayer_inst" portRef="axis_tx_arstn_i" />
                 </ipxact:portReferences>
             </ipxact:adHocConnection>
             <ipxact:adHocConnection>
@@ -917,27 +910,27 @@
                 <ipxact:name>sys_clk_pll_inst_clkos2_o_net</ipxact:name>
                 <ipxact:displayName>sys_clk_pll_inst_clkos2_o_net</ipxact:displayName>
                 <ipxact:portReferences>
-                    <ipxact:internalPortReference componentRef="mipi_csi_rx_inst" portRef="sync_clk_i" />
                     <ipxact:internalPortReference componentRef="sys_clk_pll_inst" portRef="clkos2_o" />
                     <ipxact:internalPortReference componentRef="pcie_axis_dma_inst" portRef="link0_aux_clk_i" />
                     <ipxact:internalPortReference componentRef="pcie_axis_dma_inst" portRef="usr_lmmi_clk_i" />
+                    <ipxact:internalPortReference componentRef="mipi_csi_rx_inst" portRef="ref_clk_i" />
                 </ipxact:portReferences>
             </ipxact:adHocConnection>
             <ipxact:adHocConnection>
                 <ipxact:name>sys_clk_pll_inst_clkos3_o_net</ipxact:name>
                 <ipxact:displayName>sys_clk_pll_inst_clkos3_o_net</ipxact:displayName>
                 <ipxact:portReferences>
-                    <ipxact:internalPortReference componentRef="mipi_csi_rx_inst" portRef="axis_vid_clk_i" />
-                    <ipxact:internalPortReference componentRef="mipi_csi_rx_inst" portRef="clk_fr_i" />
-                    <ipxact:internalPortReference componentRef="isp_debayer_inst" portRef="axis_rx_clk_i" />
-                    <ipxact:internalPortReference componentRef="isp_debayer_inst" portRef="axis_tx_clk_i" />
+                    <ipxact:internalPortReference componentRef="sys_clk_pll_inst" portRef="clkos3_o" />
+                    <ipxact:internalPortReference componentRef="rs_pixel_inst" portRef="dest_clk" />
                     <ipxact:internalPortReference componentRef="isp_ccm_inst" portRef="axis_rx_clk_i" />
                     <ipxact:internalPortReference componentRef="isp_ccm_inst" portRef="axis_tx_clk_i" />
                     <ipxact:internalPortReference componentRef="isp_awb_inst" portRef="axis_rx_clk_i" />
                     <ipxact:internalPortReference componentRef="isp_awb_inst" portRef="axis_tx_clk_i" />
-                    <ipxact:internalPortReference componentRef="sys_clk_pll_inst" portRef="clkos3_o" />
                     <ipxact:internalPortReference componentRef="video_pcie_bridge_inst" portRef="axis_vid_clk_i" />
-                    <ipxact:internalPortReference componentRef="rs_pixel_inst" portRef="dest_clk" />
+                    <ipxact:internalPortReference componentRef="mipi_csi_rx_inst" portRef="axis_vid_clk_i" />
+                    <ipxact:internalPortReference componentRef="mipi_csi_rx_inst" portRef="fr_clk_i" />
+                    <ipxact:internalPortReference componentRef="isp_debayer_inst" portRef="axis_rx_clk_i" />
+                    <ipxact:internalPortReference componentRef="isp_debayer_inst" portRef="axis_tx_clk_i" />
                 </ipxact:portReferences>
             </ipxact:adHocConnection>
             <ipxact:adHocConnection>
@@ -945,11 +938,11 @@
                 <ipxact:displayName>sys_clk_pll_inst_clkos_o_net</ipxact:displayName>
                 <ipxact:portReferences>
                     <ipxact:internalPortReference componentRef="sys_clk_pll_inst" portRef="clkos_o" />
+                    <ipxact:internalPortReference componentRef="rs_dma_inst" portRef="dest_clk" />
                     <ipxact:internalPortReference componentRef="axi_to_apb_inst" portRef="aclk_i" />
                     <ipxact:internalPortReference componentRef="i2c_ctrl_inst" portRef="clk_i" />
-                    <ipxact:internalPortReference componentRef="video_pcie_bridge_inst" portRef="pcie_dma_clk_i" />
                     <ipxact:internalPortReference componentRef="pcie_axis_dma_inst" portRef="clk_usr_div2_i" />
-                    <ipxact:internalPortReference componentRef="rs_dma_inst" portRef="dest_clk" />
+                    <ipxact:internalPortReference componentRef="video_pcie_bridge_inst" portRef="pcie_dma_clk_i" />
                 </ipxact:portReferences>
             </ipxact:adHocConnection>
             <ipxact:adHocConnection>
@@ -1226,7 +1219,7 @@
         <ipxact:vendor>latticesemi.com</ipxact:vendor>
         <ipxact:library>ip</ipxact:library>
         <ipxact:name>axi_to_apb</ipxact:name>
-        <ipxact:version>1.4.0</ipxact:version>
+        <ipxact:version>1.5.0</ipxact:version>
         <ipxact:busInterfaces>
             <ipxact:busInterface>
                 <ipxact:name>APB3_M</ipxact:name>
@@ -1680,7 +1673,7 @@
                 </ipxact:componentInstantiation>
                 <ipxact:designInstantiation>
                     <ipxact:name>axi_to_apb_design</ipxact:name>
-                    <ipxact:designRef vendor="latticesemi.com" library="ip" name="axi_to_apb" version="1.4.0" />
+                    <ipxact:designRef vendor="latticesemi.com" library="ip" name="axi_to_apb" version="1.5.0" />
                 </ipxact:designInstantiation>
             </ipxact:instantiations>
             <ipxact:ports>
@@ -2244,12 +2237,16 @@
                 <ipxact:name>IP</ipxact:name>
                 <ipxact:group>ip</ipxact:group>
                 <ipxact:file>
-                    <ipxact:name>./lib/latticesemi.com/ip/axi_to_apb/1.4.0/component.xml</ipxact:name>
+                    <ipxact:name>./lib/latticesemi.com/ip/axi_to_apb/1.5.0/component.xml</ipxact:name>
                     <ipxact:fileType user="xml">user</ipxact:fileType>
                 </ipxact:file>
             </ipxact:fileSet>
         </ipxact:fileSets>
         <ipxact:parameters>
+            <ipxact:parameter>
+                <ipxact:name>AXI4_LITE</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>AXI_APB_DATA_WIDTH</ipxact:name>
                 <ipxact:value>32</ipxact:value>
@@ -2268,7 +2265,7 @@
             </ipxact:parameter>
         </ipxact:parameters>
         <ipxact:vendorExtensions>
-            <lsccip:moduleRef lsccip:library="ip" lsccip:name="axi2apb_bridge" lsccip:vendor="latticesemi.com" lsccip:version="1.4.0" lsccip:display_name="AXI4 to APB Bridge" lsccip:display_vendor="latticesemi.com" />
+            <lsccip:moduleRef lsccip:library="ip" lsccip:name="axi2apb_bridge" lsccip:vendor="latticesemi.com" lsccip:version="1.5.0" lsccip:display_name="AXI4 to APB Bridge" lsccip:display_vendor="latticesemi.com" />
             <lsccip:deviceInfo>
                 <lsccip:device>LFCPNX-100</lsccip:device>
                 <lsccip:architecture>jd5d00</lsccip:architecture>
@@ -2276,7 +2273,7 @@
                 <lsccip:family>LFCPNX</lsccip:family>
                 <lsccip:operation>Commercial</lsccip:operation>
             </lsccip:deviceInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -2284,7 +2281,7 @@
         <ipxact:vendor>latticesemi.com</ipxact:vendor>
         <ipxact:library>ip</ipxact:library>
         <ipxact:name>i2c_ctrl</ipxact:name>
-        <ipxact:version>2.4.0</ipxact:version>
+        <ipxact:version>2.4.1</ipxact:version>
         <ipxact:busInterfaces>
             <ipxact:busInterface>
                 <ipxact:name>APB_S0</ipxact:name>
@@ -2411,7 +2408,7 @@
                 </ipxact:componentInstantiation>
                 <ipxact:designInstantiation>
                     <ipxact:name>i2c_ctrl_design</ipxact:name>
-                    <ipxact:designRef vendor="latticesemi.com" library="ip" name="i2c_ctrl" version="2.4.0" />
+                    <ipxact:designRef vendor="latticesemi.com" library="ip" name="i2c_ctrl" version="2.4.1" />
                 </ipxact:designInstantiation>
             </ipxact:instantiations>
             <ipxact:ports>
@@ -2531,7 +2528,7 @@
                 <ipxact:name>IP</ipxact:name>
                 <ipxact:group>ip</ipxact:group>
                 <ipxact:file>
-                    <ipxact:name>./lib/latticesemi.com/ip/i2c_ctrl/2.4.0/component.xml</ipxact:name>
+                    <ipxact:name>./lib/latticesemi.com/ip/i2c_ctrl/2.4.1/component.xml</ipxact:name>
                     <ipxact:fileType user="xml">user</ipxact:fileType>
                 </ipxact:file>
             </ipxact:fileSet>
@@ -2591,7 +2588,7 @@
             </ipxact:parameter>
         </ipxact:parameters>
         <ipxact:vendorExtensions>
-            <lsccip:moduleRef lsccip:library="ip" lsccip:name="i2c_controller" lsccip:vendor="latticesemi.com" lsccip:version="2.4.0" lsccip:display_name="I2C Controller" lsccip:display_vendor="latticesemi.com" />
+            <lsccip:moduleRef lsccip:library="ip" lsccip:name="i2c_controller" lsccip:vendor="latticesemi.com" lsccip:version="2.4.1" lsccip:display_name="I2C Controller" lsccip:display_vendor="latticesemi.com" />
             <lsccip:deviceInfo>
                 <lsccip:device>LFCPNX-100</lsccip:device>
                 <lsccip:architecture>jd5d00</lsccip:architecture>
@@ -2599,7 +2596,7 @@
                 <lsccip:family>LFCPNX</lsccip:family>
                 <lsccip:operation>Commercial</lsccip:operation>
             </lsccip:deviceInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -2607,12 +2604,12 @@
         <ipxact:vendor>latticesemi.com</ipxact:vendor>
         <ipxact:library>ip</ipxact:library>
         <ipxact:name>mipi_csi_rx</ipxact:name>
-        <ipxact:version>1.0.0.01</ipxact:version>
+        <ipxact:version>4.0.0</ipxact:version>
         <ipxact:busInterfaces>
             <ipxact:busInterface>
-                <ipxact:name>AXI4S_VID</ipxact:name>
-                <ipxact:displayName>AXI4S_VID</ipxact:displayName>
-                <ipxact:description>AXI4-Stream_Master Video Interface</ipxact:description>
+                <ipxact:name>RX_AXI4S_VID</ipxact:name>
+                <ipxact:displayName>RX_AXI4S_VID</ipxact:displayName>
+                <ipxact:description>RX AXI4-Stream Video Interface</ipxact:description>
                 <ipxact:busType vendor="amba.com" library="AMBA4" name="AXI4Stream" version="r0p0" />
                 <ipxact:abstractionTypes>
                     <ipxact:abstractionType>
@@ -2662,7 +2659,7 @@
                     </ipxact:abstractionType>
                 </ipxact:abstractionTypes>
                 <ipxact:master>
-                    <ipxact:addressSpaceRef addressSpaceRef="AXI4S_M0_Address_Space" />
+                    <ipxact:addressSpaceRef addressSpaceRef="RX_AXI4S_VID_Address_Space" />
                 </ipxact:master>
             </ipxact:busInterface>
         </ipxact:busInterfaces>
@@ -2673,7 +2670,7 @@
                 </ipxact:componentInstantiation>
                 <ipxact:designInstantiation>
                     <ipxact:name>mipi_csi_rx_design</ipxact:name>
-                    <ipxact:designRef vendor="latticesemi.com" library="ip" name="mipi_csi_rx" version="1.0.0.01" />
+                    <ipxact:designRef vendor="latticesemi.com" library="ip" name="mipi_csi_rx" version="4.0.0" />
                 </ipxact:designInstantiation>
             </ipxact:instantiations>
             <ipxact:ports>
@@ -2685,8 +2682,8 @@
                     </ipxact:wire>
                 </ipxact:port>
                 <ipxact:port>
-                    <ipxact:name>axis_vid_rstn_i</ipxact:name>
-                    <ipxact:displayName>axis_vid_rstn_i</ipxact:displayName>
+                    <ipxact:name>axis_vid_rst_n_i</ipxact:name>
+                    <ipxact:displayName>axis_vid_rst_n_i</ipxact:displayName>
                     <ipxact:wire>
                         <ipxact:direction>in</ipxact:direction>
                     </ipxact:wire>
@@ -2713,17 +2710,10 @@
                     </ipxact:wire>
                 </ipxact:port>
                 <ipxact:port>
-                    <ipxact:name>clk_byte_o</ipxact:name>
-                    <ipxact:displayName>clk_byte_o</ipxact:displayName>
+                    <ipxact:name>byte_clk_o</ipxact:name>
+                    <ipxact:displayName>byte_clk_o</ipxact:displayName>
                     <ipxact:wire>
                         <ipxact:direction>out</ipxact:direction>
-                    </ipxact:wire>
-                </ipxact:port>
-                <ipxact:port>
-                    <ipxact:name>clk_fr_i</ipxact:name>
-                    <ipxact:displayName>clk_fr_i</ipxact:displayName>
-                    <ipxact:wire>
-                        <ipxact:direction>in</ipxact:direction>
                     </ipxact:wire>
                 </ipxact:port>
                 <ipxact:port>
@@ -2741,41 +2731,29 @@
                     </ipxact:wire>
                 </ipxact:port>
                 <ipxact:port>
-                    <ipxact:name>pll_lock_i</ipxact:name>
-                    <ipxact:displayName>pll_lock_i</ipxact:displayName>
-                    <ipxact:wire>
-                        <ipxact:direction>in</ipxact:direction>
-                        <ipxact:drivers>
-                            <ipxact:driver>
-                                <ipxact:defaultValue>1&apos;b1</ipxact:defaultValue>
-                            </ipxact:driver>
-                        </ipxact:drivers>
-                    </ipxact:wire>
-                </ipxact:port>
-                <ipxact:port>
-                    <ipxact:name>ready_o</ipxact:name>
-                    <ipxact:displayName>ready_o</ipxact:displayName>
-                    <ipxact:wire>
-                        <ipxact:direction>out</ipxact:direction>
-                    </ipxact:wire>
-                </ipxact:port>
-                <ipxact:port>
-                    <ipxact:name>reset_fr_n_i</ipxact:name>
-                    <ipxact:displayName>reset_fr_n_i</ipxact:displayName>
+                    <ipxact:name>fr_clk_i</ipxact:name>
+                    <ipxact:displayName>fr_clk_i</ipxact:displayName>
                     <ipxact:wire>
                         <ipxact:direction>in</ipxact:direction>
                     </ipxact:wire>
                 </ipxact:port>
                 <ipxact:port>
-                    <ipxact:name>sync_clk_i</ipxact:name>
-                    <ipxact:displayName>sync_clk_i</ipxact:displayName>
+                    <ipxact:name>fr_rst_n_i</ipxact:name>
+                    <ipxact:displayName>fr_rst_n_i</ipxact:displayName>
                     <ipxact:wire>
                         <ipxact:direction>in</ipxact:direction>
                     </ipxact:wire>
                 </ipxact:port>
                 <ipxact:port>
-                    <ipxact:name>sync_rst_i</ipxact:name>
-                    <ipxact:displayName>sync_rst_i</ipxact:displayName>
+                    <ipxact:name>ref_clk_i</ipxact:name>
+                    <ipxact:displayName>ref_clk_i</ipxact:displayName>
+                    <ipxact:wire>
+                        <ipxact:direction>in</ipxact:direction>
+                    </ipxact:wire>
+                </ipxact:port>
+                <ipxact:port>
+                    <ipxact:name>ref_rst_n_i</ipxact:name>
+                    <ipxact:displayName>ref_rst_n_i</ipxact:displayName>
                     <ipxact:wire>
                         <ipxact:direction>in</ipxact:direction>
                     </ipxact:wire>
@@ -2800,7 +2778,7 @@
                         <ipxact:direction>out</ipxact:direction>
                         <ipxact:vectors>
                             <ipxact:vector>
-                                <ipxact:left>2</ipxact:left>
+                                <ipxact:left>1</ipxact:left>
                                 <ipxact:right>0</ipxact:right>
                             </ipxact:vector>
                         </ipxact:vectors>
@@ -2839,15 +2817,31 @@
                 <ipxact:name>IP</ipxact:name>
                 <ipxact:group>ip</ipxact:group>
                 <ipxact:file>
-                    <ipxact:name>./lib/latticesemi.com/ip/mipi_csi_rx/1.0.0.01/component.xml</ipxact:name>
+                    <ipxact:name>./lib/latticesemi.com/ip/mipi_csi_rx/4.0.0/component.xml</ipxact:name>
                     <ipxact:fileType user="xml">user</ipxact:fileType>
                 </ipxact:file>
             </ipxact:fileSet>
         </ipxact:fileSets>
         <ipxact:parameters>
             <ipxact:parameter>
+                <ipxact:name>APP_TYPE</ipxact:name>
+                <ipxact:value>CSI2</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>AXI4L_ADDR_WIDTH</ipxact:name>
+                <ipxact:value>8</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>AXI4L_DATA_WIDTH</ipxact:name>
+                <ipxact:value>32</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>B2P</ipxact:name>
                 <ipxact:value>True</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>BPC</ipxact:name>
+                <ipxact:value>10</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>BYTECLK_MHZ</ipxact:name>
@@ -2856,6 +2850,10 @@
             <ipxact:parameter>
                 <ipxact:name>BYTES_IN_PARALLEL</ipxact:name>
                 <ipxact:value>4</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>BYTE_CLK_FREQ</ipxact:name>
+                <ipxact:value>150.0</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>CDR_COARSE_TGT_DIV</ipxact:name>
@@ -2872,6 +2870,18 @@
             <ipxact:parameter>
                 <ipxact:name>CFG_CLK</ipxact:name>
                 <ipxact:value>20.0</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>CIL_BYPASS</ipxact:name>
+                <ipxact:value>True</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>CLK_MODE</ipxact:name>
+                <ipxact:value>HS_ONLY</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>COLORIMETRY</ipxact:name>
+                <ipxact:value>2</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>COUNTER_REF_TDDL</ipxact:name>
@@ -2910,12 +2920,44 @@
                 <ipxact:value>LFCPNX-100</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>DIR_TYPE</ipxact:name>
+                <ipxact:value>RX</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>DPHY_IP</ipxact:name>
+                <ipxact:value>LATTICE</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>DYNAMIC_LANE_EN</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>EBR_SIZE</ipxact:name>
+                <ipxact:value>18432</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>EDGE_CLOCK_MODE</ipxact:name>
+                <ipxact:value>INTERNAL</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>ENGINEERING_MODE</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>FAMILY</ipxact:name>
                 <ipxact:value>LFCPNX</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>FRAME_CNT_ENABLE</ipxact:name>
+                <ipxact:value>True</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>FRAME_CNT_MAX</ipxact:name>
+                <ipxact:value>255</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>GEAR</ipxact:name>
-                <ipxact:value>16</ipxact:value>
+                <ipxact:value>8</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>HS_CLK_SRC</ipxact:name>
@@ -2926,12 +2968,52 @@
                 <ipxact:value>4</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
-                <ipxact:name>NUM_RX_LANE</ipxact:name>
+                <ipxact:name>LINE_BLANKING_CNT_TH</ipxact:name>
+                <ipxact:value>1</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>LINE_BUFFER_DEPTH</ipxact:name>
+                <ipxact:value>512</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>LINE_BUFFER_DEPTH_MAX</ipxact:name>
+                <ipxact:value>8192</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>LINE_CNT</ipxact:name>
+                <ipxact:value>48</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>LINE_CNT_ENABLE</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>LINE_RATE</ipxact:name>
+                <ipxact:value>1200.0</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>LS_LE_EN</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>NUM_LANE</ipxact:name>
                 <ipxact:value>4</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>OPCON</ipxact:name>
+                <ipxact:value>Commercial</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>P2B</ipxact:name>
+                <ipxact:value>True</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>PACKAGE</ipxact:name>
                 <ipxact:value>LFG672</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>PHY_CLK_FREQ</ipxact:name>
+                <ipxact:value>600.0</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>PHY_DATA_WIDTH</ipxact:name>
@@ -2952,6 +3034,10 @@
             <ipxact:parameter>
                 <ipxact:name>PIXELS_PER_CLOCK</ipxact:name>
                 <ipxact:value>4</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>PIX_WIDTH</ipxact:name>
+                <ipxact:value>10</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>PLL_IOPD_SEL</ipxact:name>
@@ -2984,10 +3070,6 @@
             <ipxact:parameter>
                 <ipxact:name>RXESC_CLK_SRC</ipxact:name>
                 <ipxact:value>GCLK</ipxact:value>
-            </ipxact:parameter>
-            <ipxact:parameter>
-                <ipxact:name>RX_CLK_MODE</ipxact:name>
-                <ipxact:value>HS_ONLY</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>RX_CSR_APB_INITCLK_DIV_CTRL</ipxact:name>
@@ -3284,10 +3366,6 @@
             <ipxact:parameter>
                 <ipxact:name>RX_CSR_TEST_STOP_CLK_EN</ipxact:name>
                 <ipxact:value>DISABLE</ipxact:value>
-            </ipxact:parameter>
-            <ipxact:parameter>
-                <ipxact:name>RX_LINE_RATE</ipxact:name>
-                <ipxact:value>1200.0</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>RX_PHY_CSR_BG_MAX_COUNTER</ipxact:name>
@@ -4494,10 +4572,6 @@
                 <ipxact:value>0b001</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
-                <ipxact:name>RX_TYPE</ipxact:name>
-                <ipxact:value>CSI2</ipxact:value>
-            </ipxact:parameter>
-            <ipxact:parameter>
                 <ipxact:name>SPEED</ipxact:name>
                 <ipxact:value>9_High-Performance_1.0V</ipxact:value>
             </ipxact:parameter>
@@ -4530,6 +4604,26 @@
                 <ipxact:value>116</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>TIMING_ACT_VAL</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>TIMING_MARGIN_PCT</ipxact:name>
+                <ipxact:value>0</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>TINIT_COUNTER_EN</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>TINIT_VALUE</ipxact:name>
+                <ipxact:value>1000</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>TINIT_VALUE_input</ipxact:name>
+                <ipxact:value>0</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>TLPRX_UNCERT</ipxact:name>
                 <ipxact:value>5</ipxact:value>
             </ipxact:parameter>
@@ -4542,8 +4636,104 @@
                 <ipxact:value>GCLK</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>T_CLKEXIT</ipxact:name>
+                <ipxact:value>17</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_CLKEXIT_GUI</ipxact:name>
+                <ipxact:value>16</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_CLKPOST</ipxact:name>
+                <ipxact:value>17</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_CLKPOST_GUI</ipxact:name>
+                <ipxact:value>16</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_CLKPRE</ipxact:name>
+                <ipxact:value>2</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_CLKPREP</ipxact:name>
+                <ipxact:value>6</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_CLKPREP_GUI</ipxact:name>
+                <ipxact:value>6</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_CLKPRE_GUI</ipxact:name>
+                <ipxact:value>4</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_CLKTRAIL</ipxact:name>
+                <ipxact:value>10</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_CLKTRAIL_GUI</ipxact:name>
+                <ipxact:value>11</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_CLK_HSZERO</ipxact:name>
+                <ipxact:value>41</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_CLK_HSZERO_GUI</ipxact:name>
+                <ipxact:value>40</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_DATEXIT</ipxact:name>
+                <ipxact:value>17</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_DATEXIT_GUI</ipxact:name>
+                <ipxact:value>16</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_DATPREP</ipxact:name>
+                <ipxact:value>7</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_DATTRAIL</ipxact:name>
+                <ipxact:value>14</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_DATTRAIL_GUI</ipxact:name>
+                <ipxact:value>17</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_DAT_HSZERO</ipxact:name>
+                <ipxact:value>18</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_DAT_HSZERO_GUI</ipxact:name>
+                <ipxact:value>17</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>T_LPX</ipxact:name>
+                <ipxact:value>8</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>UI_PERIOD_NS</ipxact:name>
                 <ipxact:value>0.834</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>UVSI_RX_DEPTH</ipxact:name>
+                <ipxact:value>256</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>UVSI_RX_EBRNUM</ipxact:name>
+                <ipxact:value>1</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>UVSI_RX_NUMPIXBUF</ipxact:name>
+                <ipxact:value>1024</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>UVSI_RX_WIDTH</ipxact:name>
+                <ipxact:value>66</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>VCX_WIDTH</ipxact:name>
@@ -4551,7 +4741,7 @@
             </ipxact:parameter>
         </ipxact:parameters>
         <ipxact:vendorExtensions>
-            <lsccip:moduleRef lsccip:library="ip" lsccip:name="mipi_csi_dsi" lsccip:vendor="latticesemi.com" lsccip:version="1.0.0.01" lsccip:display_name="MIPI CSI/DSI" lsccip:display_vendor="latticesemi.com" />
+            <lsccip:moduleRef lsccip:library="ip" lsccip:name="mipi_csi_dsi" lsccip:vendor="latticesemi.com" lsccip:version="4.0.0" lsccip:display_name="MIPI CSI/DSI" lsccip:display_vendor="latticesemi.com" />
             <lsccip:deviceInfo>
                 <lsccip:device>LFCPNX-100</lsccip:device>
                 <lsccip:architecture>jd5d00</lsccip:architecture>
@@ -4559,7 +4749,7 @@
                 <lsccip:family>LFCPNX</lsccip:family>
                 <lsccip:operation>Commercial</lsccip:operation>
             </lsccip:deviceInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -4567,7 +4757,7 @@
         <ipxact:vendor>latticesemi.com</ipxact:vendor>
         <ipxact:library>ip</ipxact:library>
         <ipxact:name>pcie_axis_dma</ipxact:name>
-        <ipxact:version>4.0.0</ipxact:version>
+        <ipxact:version>4.1.0</ipxact:version>
         <ipxact:busInterfaces>
             <ipxact:busInterface>
                 <ipxact:name>AXIS_SOFT_DMA_S</ipxact:name>
@@ -4576,7 +4766,7 @@
                 <ipxact:busType vendor="amba.com" library="AMBA4" name="AXI4Stream" version="r0p0" />
                 <ipxact:abstractionTypes>
                     <ipxact:abstractionType>
-                        <ipxact:abstractionRef vendor="amba.com" library="AMBA4" name="AXI4Stream0_rtl" version="r0p0" />
+                        <ipxact:abstractionRef vendor="amba.com" library="AMBA4" name="AXI4Stream_rtl" version="r0p0" />
                         <ipxact:portMaps>
                             <ipxact:portMap>
                                 <ipxact:logicalPort>
@@ -4616,9 +4806,9 @@
                 <ipxact:slave />
             </ipxact:busInterface>
             <ipxact:busInterface>
-                <ipxact:name>AXI_SOFT_BRIDGE_M</ipxact:name>
-                <ipxact:displayName>AXI_SOFT_BRIDGE_M</ipxact:displayName>
-                <ipxact:description>AXI4-Lite and AXI-MM Interface for AXI_SOFT_BRIDGE</ipxact:description>
+                <ipxact:name>AXI_SOFT_BRIDGE_AXIMM_M</ipxact:name>
+                <ipxact:displayName>AXI_SOFT_BRIDGE_AXIMM_M</ipxact:displayName>
+                <ipxact:description>AXI-MM Interface for AXI_SOFT_BRIDGE</ipxact:description>
                 <ipxact:busType vendor="amba.com" library="AMBA4" name="AXI4" version="r0p0" />
                 <ipxact:abstractionTypes>
                     <ipxact:abstractionType>
@@ -4940,7 +5130,7 @@
                         <ipxact:addressOffset>32&apos;h00000000</ipxact:addressOffset>
                         <ipxact:range>32&apos;h00001000</ipxact:range>
                         <ipxact:vendorExtensions>
-                            <lattice:connection>pcie_axis_dma_inst_AXI_SOFT_BRIDGE_M</lattice:connection>
+                            <lattice:connection>pcie_axis_dma_inst_AXI_SOFT_BRIDGE_AXIMM_M</lattice:connection>
                         </ipxact:vendorExtensions>
                     </ipxact:segment>
                 </ipxact:segments>
@@ -4953,7 +5143,7 @@
                 </ipxact:componentInstantiation>
                 <ipxact:designInstantiation>
                     <ipxact:name>pcie_axis_dma_design</ipxact:name>
-                    <ipxact:designRef vendor="latticesemi.com" library="ip" name="pcie_axis_dma" version="4.0.0" />
+                    <ipxact:designRef vendor="latticesemi.com" library="ip" name="pcie_axis_dma" version="4.1.0" />
                 </ipxact:designInstantiation>
             </ipxact:instantiations>
             <ipxact:ports>
@@ -5796,31 +5986,75 @@
                 <ipxact:name>IP</ipxact:name>
                 <ipxact:group>ip</ipxact:group>
                 <ipxact:file>
-                    <ipxact:name>./lib/latticesemi.com/ip/pcie_axis_dma/4.0.0/component.xml</ipxact:name>
+                    <ipxact:name>./lib/latticesemi.com/ip/pcie_axis_dma/4.1.0/component.xml</ipxact:name>
                     <ipxact:fileType user="xml">user</ipxact:fileType>
                 </ipxact:file>
             </ipxact:fileSet>
         </ipxact:fileSets>
         <ipxact:parameters>
             <ipxact:parameter>
+                <ipxact:name>ADV_AER_CPLTO</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>ADV_AER_CPL_UR</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>ADV_AER_INT_ERR</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>ADV_AER_POISON_TLP</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>ADV_AER_UNEXP_CPL</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>AXIDMA_LINK0_F0BAR0_AXI_ADR</ipxact:name>
+                <ipxact:value>64&apos;h0</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>AXIDMA_LINK0_F0BAR0_TO_LOCADR</ipxact:name>
                 <ipxact:value>32&apos;h0</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>AXIDMA_LINK0_F0BAR1_AXI_ADR</ipxact:name>
+                <ipxact:value>64&apos;h0</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>AXIDMA_LINK0_F0BAR1_TO_LOCADR</ipxact:name>
                 <ipxact:value>32&apos;h0</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>AXIDMA_LINK0_F0BAR2_AXI_ADR</ipxact:name>
+                <ipxact:value>64&apos;h20000</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>AXIDMA_LINK0_F0BAR2_TO_LOCADR</ipxact:name>
                 <ipxact:value>32&apos;h0</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>AXIDMA_LINK0_F0BAR3_AXI_ADR</ipxact:name>
+                <ipxact:value>64&apos;h30000</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>AXIDMA_LINK0_F0BAR3_TO_LOCADR</ipxact:name>
                 <ipxact:value>32&apos;h0</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>AXIDMA_LINK0_F0BAR4_AXI_ADR</ipxact:name>
+                <ipxact:value>64&apos;h40000</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>AXIDMA_LINK0_F0BAR4_TO_LOCADR</ipxact:name>
                 <ipxact:value>32&apos;h0</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>AXIDMA_LINK0_F0BAR5_AXI_ADR</ipxact:name>
+                <ipxact:value>64&apos;h50000</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>AXIDMA_LINK0_F0BAR5_TO_LOCADR</ipxact:name>
@@ -6135,6 +6369,18 @@
                 <ipxact:value>1</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>AXI_ID_WIDTH</ipxact:name>
+                <ipxact:value>1</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>AXI_WIDTH</ipxact:name>
+                <ipxact:value>32</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>AXI_WIDTH_D8</ipxact:name>
+                <ipxact:value>4</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>C0_F2H_DESC_BYP</ipxact:name>
                 <ipxact:value>0</ipxact:value>
             </ipxact:parameter>
@@ -6152,6 +6398,10 @@
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>DEBUG_TLP</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>DEDICATED_AXI_CLOCK</ipxact:name>
                 <ipxact:value>False</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
@@ -6220,6 +6470,18 @@
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>EN_LINK1</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>FULL_BRIDGE_EN</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>FULL_BRIDGE_EN_INPUT</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>FULL_BRIDGE_NO_S0_AXIMM_PORTS</ipxact:name>
                 <ipxact:value>False</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
@@ -7252,7 +7514,7 @@
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>LINK0_MAIN_CTRL_4_EN_PORT_LINK0_INTERRUPT_LEG</ipxact:name>
-                <ipxact:value>0</ipxact:value>
+                <ipxact:value>False</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>LINK0_NUMLANES</ipxact:name>
@@ -7363,6 +7625,10 @@
                 <ipxact:value>False</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>LINK1_ASPM_SUPPORT</ipxact:name>
+                <ipxact:value>NO_ASPM</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>LINK1_DESC_QUEUE_BASEADR</ipxact:name>
                 <ipxact:value>20&apos;hde5c3</ipxact:value>
             </ipxact:parameter>
@@ -7377,6 +7643,22 @@
             <ipxact:parameter>
                 <ipxact:name>LINK1_DWID</ipxact:name>
                 <ipxact:value>64</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>LINK1_ENTRY_TIME_ASPM_L0S</ipxact:name>
+                <ipxact:value>0b0000000000000000</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>LINK1_ENTRY_TIME_ASPM_L1</ipxact:name>
+                <ipxact:value>0b0000000000000000</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>LINK1_EN_ASPM_L0S</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>LINK1_EN_ASPM_L1</ipxact:name>
+                <ipxact:value>False</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>LINK1_EN_DPA_PORTS</ipxact:name>
@@ -7516,7 +7798,7 @@
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>LINK1_FTL_ARI_CAP_DISABLE</ipxact:name>
-                <ipxact:value>0</ipxact:value>
+                <ipxact:value>True</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>LINK1_FTL_ATOMIC_OP_CAP_COMPLETER_128_SUPPORTED</ipxact:name>
@@ -7656,11 +7938,11 @@
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>LINK1_FTL_INITIAL_TARGET_LINK_SPEED</ipxact:name>
-                <ipxact:value>5G</ipxact:value>
+                <ipxact:value>2</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>LINK1_FTL_INTERRUPT_DISABLE</ipxact:name>
-                <ipxact:value>False</ipxact:value>
+                <ipxact:value>True</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>LINK1_FTL_INTERRUPT_PIN</ipxact:name>
@@ -8368,7 +8650,11 @@
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>LINK1_MAIN_CTRL_4_EN_PORT_LINK1_INTERRUPT_LEG</ipxact:name>
-                <ipxact:value>True</ipxact:value>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>LINK1_NUMLANES</ipxact:name>
+                <ipxact:value>1</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>LINK1_NUM_FUNCTIONS</ipxact:name>
@@ -8499,6 +8785,10 @@
                 <ipxact:value>13&apos;h18a4</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>PCIE_ORDERING_AXI_EN</ipxact:name>
+                <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>REFCLK</ipxact:name>
                 <ipxact:value>100</ipxact:value>
             </ipxact:parameter>
@@ -8559,6 +8849,10 @@
                 <ipxact:value>False</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>axidma_link0_f0_bar0_axi_address</ipxact:name>
+                <ipxact:value>0</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar0_enable</ipxact:name>
                 <ipxact:value>1</ipxact:value>
             </ipxact:parameter>
@@ -8575,6 +8869,10 @@
                 <ipxact:value>64</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>axidma_link0_f0_bar0_size_addr</ipxact:name>
+                <ipxact:value>65536</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar0_type</ipxact:name>
                 <ipxact:value>0</ipxact:value>
             </ipxact:parameter>
@@ -8585,6 +8883,10 @@
             <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar1_64b</ipxact:name>
                 <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>axidma_link0_f0_bar1_axi_address</ipxact:name>
+                <ipxact:value>0</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar1_enable</ipxact:name>
@@ -8603,6 +8905,10 @@
                 <ipxact:value>64</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>axidma_link0_f0_bar1_size_addr</ipxact:name>
+                <ipxact:value>64</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar1_type</ipxact:name>
                 <ipxact:value>0</ipxact:value>
             </ipxact:parameter>
@@ -8613,6 +8919,10 @@
             <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar2_64b</ipxact:name>
                 <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>axidma_link0_f0_bar2_axi_address</ipxact:name>
+                <ipxact:value>20000</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar2_enable</ipxact:name>
@@ -8631,6 +8941,10 @@
                 <ipxact:value>64</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>axidma_link0_f0_bar2_size_addr</ipxact:name>
+                <ipxact:value>65536</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar2_type</ipxact:name>
                 <ipxact:value>0</ipxact:value>
             </ipxact:parameter>
@@ -8641,6 +8955,10 @@
             <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar3_64b</ipxact:name>
                 <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>axidma_link0_f0_bar3_axi_address</ipxact:name>
+                <ipxact:value>30000</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar3_enable</ipxact:name>
@@ -8659,6 +8977,10 @@
                 <ipxact:value>64</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>axidma_link0_f0_bar3_size_addr</ipxact:name>
+                <ipxact:value>65536</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar3_type</ipxact:name>
                 <ipxact:value>0</ipxact:value>
             </ipxact:parameter>
@@ -8669,6 +8991,10 @@
             <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar4_64b</ipxact:name>
                 <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>axidma_link0_f0_bar4_axi_address</ipxact:name>
+                <ipxact:value>40000</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar4_enable</ipxact:name>
@@ -8687,6 +9013,10 @@
                 <ipxact:value>64</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>axidma_link0_f0_bar4_size_addr</ipxact:name>
+                <ipxact:value>65536</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar4_type</ipxact:name>
                 <ipxact:value>0</ipxact:value>
             </ipxact:parameter>
@@ -8697,6 +9027,10 @@
             <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar5_64b</ipxact:name>
                 <ipxact:value>False</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>axidma_link0_f0_bar5_axi_address</ipxact:name>
+                <ipxact:value>50000</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar5_enable</ipxact:name>
@@ -8715,12 +9049,20 @@
                 <ipxact:value>64</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>axidma_link0_f0_bar5_size_addr</ipxact:name>
+                <ipxact:value>65536</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar5_type</ipxact:name>
                 <ipxact:value>0</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_bar5_unit</ipxact:name>
                 <ipxact:value>1</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>axidma_link0_f0_rbar_overlap_chk</ipxact:name>
+                <ipxact:value>Enabled</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>axidma_link0_f0_rbar_params</ipxact:name>
@@ -10135,6 +10477,14 @@
                 <ipxact:value>DE5C3000</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
+                <ipxact:name>link1_entry_time_aspm_l0s</ipxact:name>
+                <ipxact:value>0000</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>link1_entry_time_aspm_l1</ipxact:name>
+                <ipxact:value>0000</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
                 <ipxact:name>link1_f0_bar0_64b</ipxact:name>
                 <ipxact:value>False</ipxact:value>
             </ipxact:parameter>
@@ -11004,7 +11354,7 @@
             </ipxact:parameter>
         </ipxact:parameters>
         <ipxact:vendorExtensions>
-            <lsccip:moduleRef lsccip:library="ip" lsccip:name="pcie_x4" lsccip:vendor="latticesemi.com" lsccip:version="4.0.0" lsccip:display_name="PCIE_X4" lsccip:display_vendor="latticesemi.com" />
+            <lsccip:moduleRef lsccip:library="ip" lsccip:name="pcie_x4" lsccip:vendor="latticesemi.com" lsccip:version="4.1.0" lsccip:display_name="PCIE_X4" lsccip:display_vendor="latticesemi.com" />
             <lsccip:deviceInfo>
                 <lsccip:device>LFCPNX-100</lsccip:device>
                 <lsccip:architecture>jd5d00</lsccip:architecture>
@@ -11012,7 +11362,7 @@
                 <lsccip:family>LFCPNX</lsccip:family>
                 <lsccip:operation>Commercial</lsccip:operation>
             </lsccip:deviceInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -11098,7 +11448,7 @@
                 <lsccip:family>LFCPNX</lsccip:family>
                 <lsccip:operation>Commercial</lsccip:operation>
             </lsccip:deviceInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -11184,7 +11534,7 @@
                 <lsccip:family>LFCPNX</lsccip:family>
                 <lsccip:operation>Commercial</lsccip:operation>
             </lsccip:deviceInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12073,7 +12423,7 @@
                 <lsccip:family>LFCPNX</lsccip:family>
                 <lsccip:operation>Commercial</lsccip:operation>
             </lsccip:deviceInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12135,7 +12485,7 @@
                 <lsccip:logicRtl>assign &lt;pin:BUS&gt;[3] = &lt;pin:A&gt;;&#x0A; assign &lt;pin:BUS&gt;[2] = &lt;pin:B&gt;;&#x0A; assign &lt;pin:BUS&gt;[1] = &lt;pin:C&gt;;&#x0A; assign &lt;pin:BUS&gt;[0] = &lt;pin:D&gt;;&#x0A;</lsccip:logicRtl>
                 <lsccip:logicCfg>{&#x0A; &quot;LHS_Items&quot;: &quot;A[3],B[2],C[1],D[0]&quot;,&#x0A; &quot;RHS_Bus&quot;: &quot;BUS[3:0]&quot;&#x0A;}&#x0A;</lsccip:logicCfg>
             </lsccip:logicInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12197,7 +12547,7 @@
                 <lsccip:logicRtl>assign &lt;pin:BUS&gt;[3] = &lt;pin:A&gt;;&#x0A; assign &lt;pin:BUS&gt;[2] = &lt;pin:B&gt;;&#x0A; assign &lt;pin:BUS&gt;[1] = &lt;pin:C&gt;;&#x0A; assign &lt;pin:BUS&gt;[0] = &lt;pin:D&gt;;&#x0A;</lsccip:logicRtl>
                 <lsccip:logicCfg>{&#x0A; &quot;LHS_Items&quot;: &quot;A[3],B[2],C[1],D[0]&quot;,&#x0A; &quot;RHS_Bus&quot;: &quot;BUS[3:0]&quot;&#x0A;}&#x0A;</lsccip:logicCfg>
             </lsccip:logicInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12259,7 +12609,7 @@
                 <lsccip:logicRtl>assign &lt;pin:BUS&gt;[3] = &lt;pin:A&gt;;&#x0A; assign &lt;pin:BUS&gt;[2] = &lt;pin:B&gt;;&#x0A; assign &lt;pin:BUS&gt;[1] = &lt;pin:C&gt;;&#x0A; assign &lt;pin:BUS&gt;[0] = &lt;pin:D&gt;;&#x0A;</lsccip:logicRtl>
                 <lsccip:logicCfg>{&#x0A; &quot;LHS_Items&quot;: &quot;A[3],B[2],C[1],D[0]&quot;,&#x0A; &quot;RHS_Bus&quot;: &quot;BUS[3:0]&quot;&#x0A;}&#x0A;</lsccip:logicCfg>
             </lsccip:logicInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12328,7 +12678,7 @@
                 <lsccip:logicRtl>assign &lt;pin:BUS&gt;[4] = &lt;pin:A&gt;;&#x0A; assign &lt;pin:BUS&gt;[3] = &lt;pin:B&gt;;&#x0A; assign &lt;pin:BUS&gt;[2] = &lt;pin:C&gt;;&#x0A; assign &lt;pin:BUS&gt;[1] = &lt;pin:D&gt;;&#x0A; assign &lt;pin:BUS&gt;[0] = &lt;pin:E&gt;;&#x0A;</lsccip:logicRtl>
                 <lsccip:logicCfg>{&#x0A; &quot;LHS_Items&quot;: &quot;A[4],B[3],C[2],D[1],E[0]&quot;,&#x0A; &quot;RHS_Bus&quot;: &quot;BUS[4:0]&quot;&#x0A;}&#x0A;</lsccip:logicCfg>
             </lsccip:logicInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12369,7 +12719,7 @@
                 <lsccip:logicRtl>assign &lt;pin:BUS&gt;[0] = &lt;pin:A&gt;;&#x0A;</lsccip:logicRtl>
                 <lsccip:logicCfg>{&#x0A; &quot;LHS_Items&quot;: &quot;A[0]&quot;,&#x0A; &quot;RHS_Bus&quot;: &quot;BUS[0:0]&quot;&#x0A;}&#x0A;</lsccip:logicCfg>
             </lsccip:logicInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12431,7 +12781,7 @@
                 <lsccip:logicRtl>assign &lt;pin:BUS&gt;[3] = &lt;pin:A&gt;;&#x0A; assign &lt;pin:BUS&gt;[2] = &lt;pin:B&gt;;&#x0A; assign &lt;pin:BUS&gt;[1] = &lt;pin:C&gt;;&#x0A; assign &lt;pin:BUS&gt;[0] = &lt;pin:D&gt;;&#x0A;</lsccip:logicRtl>
                 <lsccip:logicCfg>{&#x0A; &quot;LHS_Items&quot;: &quot;A[3],B[2],C[1],D[0]&quot;,&#x0A; &quot;RHS_Bus&quot;: &quot;BUS[3:0]&quot;&#x0A;}&#x0A;</lsccip:logicCfg>
             </lsccip:logicInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12480,7 +12830,7 @@
                 <lsccip:logicRtl>assign &lt;pin:O&gt; = ((&lt;pin:A&gt; &amp; &lt;pin:B&gt;) &amp; &lt;pin:C&gt;) ; &#x0A;</lsccip:logicRtl>
                 <lsccip:logicCfg>{&#x0A; &quot;expr&quot;: &quot;O = A &amp; B &amp; C&quot;,&#x0A; &quot;module_name&quot;: &quot;equation_module1&quot;&#x0A;}&#x0A;</lsccip:logicCfg>
             </lsccip:logicInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12522,7 +12872,7 @@
                 <lsccip:logicRtl>assign &lt;pin:O&gt; = (&lt;pin:A&gt; &amp; &lt;pin:B&gt;) ; &#x0A;</lsccip:logicRtl>
                 <lsccip:logicCfg>{&#x0A; &quot;expr&quot;: &quot;O = A &amp; B&quot;,&#x0A; &quot;module_name&quot;: &quot;equation_module&quot;&#x0A;}&#x0A;</lsccip:logicCfg>
             </lsccip:logicInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12561,7 +12911,7 @@
                 <lsccip:logicSymbol>INV pin I input pin O output</lsccip:logicSymbol>
                 <lsccip:logicRtl>assign &lt;pin:O&gt; = !&lt;pin:I&gt;;</lsccip:logicRtl>
             </lsccip:logicInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12595,7 +12945,7 @@
                 <lsccip:logicSymbol>INV pin I input pin O output</lsccip:logicSymbol>
                 <lsccip:logicRtl>assign &lt;pin:O&gt; = !&lt;pin:I&gt;;</lsccip:logicRtl>
             </lsccip:logicInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12634,7 +12984,7 @@
                 <lsccip:logicSymbol>INV pin I input pin O output</lsccip:logicSymbol>
                 <lsccip:logicRtl>assign &lt;pin:O&gt; = !&lt;pin:I&gt;;</lsccip:logicRtl>
             </lsccip:logicInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12696,7 +13046,7 @@
                 <lsccip:logicRtl>assign &lt;pin:A&gt; = &lt;pin:BUS&gt;[3];&#x0A; assign &lt;pin:B&gt; = &lt;pin:BUS&gt;[2];&#x0A; assign &lt;pin:C&gt; = &lt;pin:BUS&gt;[1];&#x0A; assign &lt;pin:D&gt; = &lt;pin:BUS&gt;[0];&#x0A;</lsccip:logicRtl>
                 <lsccip:logicCfg>{&#x0A; &quot;LHS_Bus&quot;: &quot;BUS[3:0]&quot;,&#x0A; &quot;RHS_Items&quot;: &quot;A[3],B[2],C[1],D[0]&quot;&#x0A;}&#x0A;</lsccip:logicCfg>
             </lsccip:logicInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12737,7 +13087,7 @@
                 <lsccip:logicRtl>assign &lt;pin:A&gt; = &lt;pin:BUS&gt;[0];&#x0A;</lsccip:logicRtl>
                 <lsccip:logicCfg>{&#x0A; &quot;LHS_Bus&quot;: &quot;BUS[0:0]&quot;,&#x0A; &quot;RHS_Items&quot;: &quot;A[0]&quot;&#x0A;}&#x0A;</lsccip:logicCfg>
             </lsccip:logicInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12799,7 +13149,7 @@
                 <lsccip:logicRtl>assign &lt;pin:A&gt; = &lt;pin:BUS&gt;[3];&#x0A; assign &lt;pin:B&gt; = &lt;pin:BUS&gt;[2];&#x0A; assign &lt;pin:C&gt; = &lt;pin:BUS&gt;[1];&#x0A; assign &lt;pin:D&gt; = &lt;pin:BUS&gt;[0];&#x0A;</lsccip:logicRtl>
                 <lsccip:logicCfg>{&#x0A; &quot;LHS_Bus&quot;: &quot;BUS[3:0]&quot;,&#x0A; &quot;RHS_Items&quot;: &quot;A[3],B[2],C[1],D[0]&quot;&#x0A;}&#x0A;</lsccip:logicCfg>
             </lsccip:logicInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -12807,7 +13157,7 @@
         <ipxact:vendor>latticesemi_custom</ipxact:vendor>
         <ipxact:library>ip</ipxact:library>
         <ipxact:name>isp_awb</ipxact:name>
-        <ipxact:version>1.4.0.01</ipxact:version>
+        <ipxact:version>1.4.0.03</ipxact:version>
         <ipxact:busInterfaces>
             <ipxact:busInterface>
                 <ipxact:name>AXI4S_M0</ipxact:name>
@@ -12952,7 +13302,7 @@
                 </ipxact:componentInstantiation>
                 <ipxact:designInstantiation>
                     <ipxact:name>isp_awb_design</ipxact:name>
-                    <ipxact:designRef vendor="latticesemi_custom" library="ip" name="isp_awb" version="1.4.0.01" />
+                    <ipxact:designRef vendor="latticesemi_custom" library="ip" name="isp_awb" version="1.4.0.03" />
                 </ipxact:designInstantiation>
             </ipxact:instantiations>
             <ipxact:ports>
@@ -13085,7 +13435,7 @@
                 <ipxact:name>IP</ipxact:name>
                 <ipxact:group>ip</ipxact:group>
                 <ipxact:file>
-                    <ipxact:name>./lib/latticesemi_custom/ip/isp_awb/1.4.0.01/component.xml</ipxact:name>
+                    <ipxact:name>./lib/latticesemi_custom/ip/isp_awb/1.4.0.03/component.xml</ipxact:name>
                     <ipxact:fileType user="xml">user</ipxact:fileType>
                 </ipxact:file>
             </ipxact:fileSet>
@@ -13125,11 +13475,11 @@
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>IP_DIR</ipxact:name>
-                <ipxact:value>./lib/latticesemi_custom/ip/isp_awb/1.4.0.01</ipxact:value>
+                <ipxact:value>./lib/latticesemi_custom/ip/isp_awb/1.4.0.03</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>MEM_INIT_FILE</ipxact:name>
-                <ipxact:value>./lib/latticesemi_custom/ip/isp_awb/1.4.0.01/eval/mem_list.txt</ipxact:value>
+                <ipxact:value>./lib/latticesemi_custom/ip/isp_awb/1.4.0.03/eval/mem_list.txt</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>PIXELS_PER_CLK</ipxact:name>
@@ -13145,7 +13495,7 @@
             </ipxact:parameter>
         </ipxact:parameters>
         <ipxact:vendorExtensions>
-            <lsccip:moduleRef lsccip:library="ip" lsccip:name="awb" lsccip:vendor="latticesemi_custom" lsccip:version="1.4.0.01" lsccip:display_name="Automatic White Balance" lsccip:display_vendor="latticesemi_custom" />
+            <lsccip:moduleRef lsccip:library="ip" lsccip:name="awb" lsccip:vendor="latticesemi_custom" lsccip:version="1.4.0.03" lsccip:display_name="Automatic White Balance" lsccip:display_vendor="latticesemi_custom" />
             <lsccip:deviceInfo>
                 <lsccip:device>LFCPNX-100</lsccip:device>
                 <lsccip:architecture>jd5d00</lsccip:architecture>
@@ -13153,7 +13503,7 @@
                 <lsccip:family>LFCPNX</lsccip:family>
                 <lsccip:operation>Commercial</lsccip:operation>
             </lsccip:deviceInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -13161,7 +13511,7 @@
         <ipxact:vendor>latticesemi_custom</ipxact:vendor>
         <ipxact:library>ip</ipxact:library>
         <ipxact:name>isp_ccm</ipxact:name>
-        <ipxact:version>1.3.1.01</ipxact:version>
+        <ipxact:version>1.3.1.03</ipxact:version>
         <ipxact:busInterfaces>
             <ipxact:busInterface>
                 <ipxact:name>AXI4S_M0</ipxact:name>
@@ -13316,7 +13666,7 @@
                 </ipxact:componentInstantiation>
                 <ipxact:designInstantiation>
                     <ipxact:name>isp_ccm_design</ipxact:name>
-                    <ipxact:designRef vendor="latticesemi_custom" library="ip" name="isp_ccm" version="1.3.1.01" />
+                    <ipxact:designRef vendor="latticesemi_custom" library="ip" name="isp_ccm" version="1.3.1.03" />
                 </ipxact:designInstantiation>
             </ipxact:instantiations>
             <ipxact:ports>
@@ -13449,7 +13799,7 @@
                 <ipxact:name>IP</ipxact:name>
                 <ipxact:group>ip</ipxact:group>
                 <ipxact:file>
-                    <ipxact:name>./lib/latticesemi_custom/ip/isp_ccm/1.3.1.01/component.xml</ipxact:name>
+                    <ipxact:name>./lib/latticesemi_custom/ip/isp_ccm/1.3.1.03/component.xml</ipxact:name>
                     <ipxact:fileType user="xml">user</ipxact:fileType>
                 </ipxact:file>
             </ipxact:fileSet>
@@ -13485,7 +13835,7 @@
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>IP_DIR</ipxact:name>
-                <ipxact:value>./lib/latticesemi_custom/ip/isp_ccm/1.3.1.01</ipxact:value>
+                <ipxact:value>./lib/latticesemi_custom/ip/isp_ccm/1.3.1.03</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>MBB</ipxact:name>
@@ -13585,7 +13935,7 @@
             </ipxact:parameter>
         </ipxact:parameters>
         <ipxact:vendorExtensions>
-            <lsccip:moduleRef lsccip:library="ip" lsccip:name="ccm" lsccip:vendor="latticesemi_custom" lsccip:version="1.3.1.01" lsccip:display_name="Color Correction Matrix" lsccip:display_vendor="latticesemi_custom" />
+            <lsccip:moduleRef lsccip:library="ip" lsccip:name="ccm" lsccip:vendor="latticesemi_custom" lsccip:version="1.3.1.03" lsccip:display_name="Color Correction Matrix" lsccip:display_vendor="latticesemi_custom" />
             <lsccip:deviceInfo>
                 <lsccip:device>LFCPNX-100</lsccip:device>
                 <lsccip:architecture>jd5d00</lsccip:architecture>
@@ -13593,7 +13943,7 @@
                 <lsccip:family>LFCPNX</lsccip:family>
                 <lsccip:operation>Commercial</lsccip:operation>
             </lsccip:deviceInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -13601,7 +13951,7 @@
         <ipxact:vendor>latticesemi_custom</ipxact:vendor>
         <ipxact:library>ip</ipxact:library>
         <ipxact:name>isp_debayer</ipxact:name>
-        <ipxact:version>1.4.0.01</ipxact:version>
+        <ipxact:version>1.4.0.03</ipxact:version>
         <ipxact:busInterfaces>
             <ipxact:busInterface>
                 <ipxact:name>AXI4S_M0</ipxact:name>
@@ -13756,7 +14106,7 @@
                 </ipxact:componentInstantiation>
                 <ipxact:designInstantiation>
                     <ipxact:name>isp_debayer_design</ipxact:name>
-                    <ipxact:designRef vendor="latticesemi_custom" library="ip" name="isp_debayer" version="1.4.0.01" />
+                    <ipxact:designRef vendor="latticesemi_custom" library="ip" name="isp_debayer" version="1.4.0.03" />
                 </ipxact:designInstantiation>
             </ipxact:instantiations>
             <ipxact:ports>
@@ -13889,7 +14239,7 @@
                 <ipxact:name>IP</ipxact:name>
                 <ipxact:group>ip</ipxact:group>
                 <ipxact:file>
-                    <ipxact:name>./lib/latticesemi_custom/ip/isp_debayer/1.4.0.01/component.xml</ipxact:name>
+                    <ipxact:name>./lib/latticesemi_custom/ip/isp_debayer/1.4.0.03/component.xml</ipxact:name>
                     <ipxact:fileType user="xml">user</ipxact:fileType>
                 </ipxact:file>
             </ipxact:fileSet>
@@ -13933,7 +14283,7 @@
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>IP_DIR</ipxact:name>
-                <ipxact:value>./lib/latticesemi_custom/ip/isp_debayer/1.4.0.01</ipxact:value>
+                <ipxact:value>./lib/latticesemi_custom/ip/isp_debayer/1.4.0.03</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>PARTIAL_RESOLUTION</ipxact:name>
@@ -13957,7 +14307,11 @@
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>TX_BUFFER_DEPTH</ipxact:name>
-                <ipxact:value>128</ipxact:value>
+                <ipxact:value>32</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter>
+                <ipxact:name>TX_BUFFER_TYPE</ipxact:name>
+                <ipxact:value>LUT</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter>
                 <ipxact:name>VIDEO_TYPE</ipxact:name>
@@ -13965,7 +14319,7 @@
             </ipxact:parameter>
         </ipxact:parameters>
         <ipxact:vendorExtensions>
-            <lsccip:moduleRef lsccip:library="ip" lsccip:name="debayer" lsccip:vendor="latticesemi_custom" lsccip:version="1.4.0.01" lsccip:display_name="Debayer" lsccip:display_vendor="latticesemi_custom" />
+            <lsccip:moduleRef lsccip:library="ip" lsccip:name="debayer" lsccip:vendor="latticesemi_custom" lsccip:version="1.4.0.03" lsccip:display_name="Debayer" lsccip:display_vendor="latticesemi_custom" />
             <lsccip:deviceInfo>
                 <lsccip:device>LFCPNX-100</lsccip:device>
                 <lsccip:architecture>jd5d00</lsccip:architecture>
@@ -13973,7 +14327,7 @@
                 <lsccip:family>LFCPNX</lsccip:family>
                 <lsccip:operation>Commercial</lsccip:operation>
             </lsccip:deviceInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>
@@ -13981,7 +14335,7 @@
         <ipxact:vendor>latticesemi_custom</ipxact:vendor>
         <ipxact:library>ip</ipxact:library>
         <ipxact:name>video_pcie_bridge</ipxact:name>
-        <ipxact:version>1.1.0</ipxact:version>
+        <ipxact:version>1.1.1</ipxact:version>
         <ipxact:busInterfaces>
             <ipxact:busInterface>
                 <ipxact:name>AXI4S_PCIE</ipxact:name>
@@ -14093,7 +14447,7 @@
                 </ipxact:componentInstantiation>
                 <ipxact:designInstantiation>
                     <ipxact:name>video_pcie_bridge_design</ipxact:name>
-                    <ipxact:designRef vendor="latticesemi_custom" library="ip" name="video_pcie_bridge" version="1.1.0" />
+                    <ipxact:designRef vendor="latticesemi_custom" library="ip" name="video_pcie_bridge" version="1.1.1" />
                 </ipxact:designInstantiation>
             </ipxact:instantiations>
             <ipxact:ports>
@@ -14227,7 +14581,7 @@
                 <ipxact:name>IP</ipxact:name>
                 <ipxact:group>ip</ipxact:group>
                 <ipxact:file>
-                    <ipxact:name>./lib/latticesemi_custom/ip/video_pcie_bridge/1.1.0/component.xml</ipxact:name>
+                    <ipxact:name>./lib/latticesemi_custom/ip/video_pcie_bridge/1.1.1/component.xml</ipxact:name>
                     <ipxact:fileType user="xml">user</ipxact:fileType>
                 </ipxact:file>
             </ipxact:fileSet>
@@ -14263,7 +14617,7 @@
             </ipxact:parameter>
         </ipxact:parameters>
         <ipxact:vendorExtensions>
-            <lsccip:moduleRef lsccip:library="ip" lsccip:name="unified_video_to_pcie_bridge" lsccip:vendor="latticesemi_custom" lsccip:version="1.1.0" lsccip:display_name="Unified Video to PCIe Bridge" lsccip:display_vendor="latticesemi_custom" />
+            <lsccip:moduleRef lsccip:library="ip" lsccip:name="unified_video_to_pcie_bridge" lsccip:vendor="latticesemi_custom" lsccip:version="1.1.1" lsccip:display_name="Unified Video to PCIe Bridge" lsccip:display_vendor="latticesemi_custom" />
             <lsccip:deviceInfo>
                 <lsccip:device>LFCPNX-100</lsccip:device>
                 <lsccip:architecture>jd5d00</lsccip:architecture>
@@ -14271,7 +14625,7 @@
                 <lsccip:family>LFCPNX</lsccip:family>
                 <lsccip:operation>Commercial</lsccip:operation>
             </lsccip:deviceInfo>
-            <lattice:radiant>2025.2.0.45.0</lattice:radiant>
+            <lattice:radiant>2026.1.0.37.0</lattice:radiant>
             <lattice:addressMerge>False</lattice:addressMerge>
         </ipxact:vendorExtensions>
     </ipxact:component>

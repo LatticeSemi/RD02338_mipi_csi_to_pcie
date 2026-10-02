@@ -22,7 +22,7 @@
 --UNINTERRUPTED OR ERROR FREE, OR THAT DEFECTS HEREIN WILL BE CORRECTED.
 --LICENSEE ASSUMES RESPONSIBILITY FOR SELECTION OF MATERIALS TO ACHIEVE ITS
 --INTENDED RESULTS, AND FOR THE PROPER INSTALLATION, USE, AND RESULTS 
---OBTAINED THEREFROM.LICENSEE ASSUMES THE ENTIRE RISK OF THE FILE AND ITS 
+--OBTAINED THERE FROM.LICENSEE ASSUMES THE ENTIRE RISK OF THE FILE AND ITS 
 --CONTENTS PROVING DEFECTIVE OR FAILING TO PERFORM PROPERLY AND IN SUCH 
 --EVENT, LICENSEE SHALL ASSUME THE ENTIRE COST AND RISK OF ANY REPAIR, 
 --SERVICE, CORRECTION, OR ANY OTHER LIABILITIES OR DAMAGES CAUSED BY OR 
@@ -89,12 +89,12 @@ component mipi_csi_to_pcie is
 end component mipi_csi_to_pcie;
 _inst: mipi_csi_to_pcie port map (pcie_refclkn_i => __,
                                   pcie_refclkp_i => __,
-                                  cam_scl_io => __,
-                                  cam_sda_io => __,
                                   d_n_io => __,
                                   d_p_io => __,
                                   cam_reset_n_o => __,
                                   clk_n_io => __,
                                   clk_p_io => __,
+                                  cam_scl_io => __,
+                                  cam_sda_io => __,
                                   clk_125mhz => __);
                                   

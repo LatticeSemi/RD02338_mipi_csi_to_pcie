@@ -6,19 +6,7 @@
 #ifndef LSC_PCIE_DMA_H
 #define LSC_PCIE_DMA_H
 
-/* Forward declarations to break circular dependency */
-struct lsc_pcie;
-struct lsc_pcie_dma_buffer;
-struct lsc_pcie_dma_transfer;
-enum dma_direction;
-enum dma_buffer_mode;
-
-#include <linux/types.h>
-
-typedef void (*lsc_pcie_dma_frame_done_cb_t)(void *priv, u32 sequence_num, u64 timestamp_ns, struct lsc_pcie_dma_buffer *completed_buf);
-
 #include "lsc_pcie_core.h"
-#include "lsc_pcie_regs.h"
 
 #include <linux/interrupt.h>
 #include <linux/scatterlist.h>

@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<RadiantModule architecture="jd5d00" date="2026 09 11 05:03:47" device="LFCPNX-100" device_int="jd5d80" display_module="Debayer" display_vendor="latticesemi_custom" family="LFCPNX" gen_platform="Propel" gen_platform_version="2026.1.0.2606162255" generator="ipgen" library="ip" module="debayer" name="isp_debayer" operation="Commercial" package="LFG672" package_int="LFG672" partnumber="LFCPNX-100-9LFG672C" source_format="Verilog" speed="9_High-Performance_1.0V" speed_int="12" vendor="latticesemi_custom" version="1.4.0.03">
+ <Package>
+  <File modified="2026 09 11 05:03:47" name="rtl/isp_debayer_bb.v" type="black_box_verilog"/>
+  <File modified="2026 09 11 05:03:47" name="isp_debayer.cfg" type="cfg"/>
+  <File modified="2026 09 11 05:03:47" name="misc/isp_debayer_tmpl.v" type="template_verilog"/>
+  <File modified="2026 09 11 05:03:47" name="misc/isp_debayer_tmpl.vhd" type="template_vhdl"/>
+  <File modified="2026 09 11 05:03:47" name="rtl/isp_debayer.v" type="top_level_verilog"/>
+  <File modified="2026 09 11 05:03:47" name="constraints/isp_debayer.ldc" type="timing_constraints"/>
+  <File modified="2026 09 11 05:03:47" name="component.xml" type="IP-XACT_component"/>
+  <File modified="2026 09 11 05:03:47" name="design.xml" type="IP-XACT_design"/>
+ </Package>
+</RadiantModule>

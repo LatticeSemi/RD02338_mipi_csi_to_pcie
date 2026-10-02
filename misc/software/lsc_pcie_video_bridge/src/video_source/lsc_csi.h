@@ -6,9 +6,18 @@
 #ifndef __LSC_CSI_H__
 #define __LSC_CSI_H__
 
-#include "../lsc_pcie_core.h"
+#include "../lsc_pcie_i2c.h"
 
-int lsc_csi_init(struct lsc_pcie *lpcie);
-void lsc_csi_cleanup(struct lsc_pcie *lpcie);
+struct v4l2_device;
+struct v4l2_ctrl_handler;
+struct lsc_video_source;
+
+int lsc_csi_init(
+	struct lsc_pcie_i2c *pcie_i2c,
+	struct v4l2_device *v4l2_dev,
+	struct v4l2_ctrl_handler *ctrl_handler,
+	struct lsc_video_source **video_src_out);
+
+void lsc_csi_cleanup(struct lsc_video_source *video_src);
 
 #endif /* __LSC_CSI_H__ */
